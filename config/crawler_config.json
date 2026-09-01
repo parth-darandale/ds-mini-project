@@ -1,0 +1,19 @@
+{
+  "seed_urls": [
+    "https://docs.python.org/3/tutorial/index.html",
+    "https://grpc.io/docs/what-is-grpc/introduction/",
+    "https://kubernetes.io/docs/concepts/overview/"
+  ],
+  "allowed_domains": [
+    "docs.python.org",
+    "grpc.io",
+    "kubernetes.io"
+  ],
+  "max_pages": 40,
+  "max_depth": 1,
+  "request_delay_seconds": 1.0,
+  "timeout_seconds": 10,
+  "user_agent": "PCCOE-Distributed-Search-Engine-Student-Crawler/1.0",
+  "output_dir": "data"
+}
+

@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Contributing Changes</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../css/style_en.css"></head><body><div id="banner"><div id="banner-content">
+
+Join us for the first quarterly
+<a href="https://go.f5.net/nginxcommunitycall">NGINX Community Call</a>
+on July 22nd to connect and discuss NGINX development.
+
+</div></div><div id="main"><div id="menu"><input class="side-menu" type="checkbox" id="side-menu"><label class="hamb" for="side-menu"><span class="hamb-line"></span></label><nav class="nav"><h1><a href="/"><img src="/img/nginx_logo.svg" alt="NGINX" class="lightimage" style="display: block; height: auto;"><div class="darkimageWrapper" style="mso-hide: all; display: none"><img src="/img/nginx_logo_dark.svg" alt="NGINX" class="darkimage" style="display: none;"></div></a></h1><div><ul class="mobilemenu"><li>english<br></li><li><a href="../../ru/docs/contributing_changes.html">русский</a></li><li><br></li><li><a href="../../news.html">news</a></li><li><a href="../../en/">about</a></li><li><a href="../../en/download.html">download</a></li><li><a href="../../en/security_advisories.html">security</a></li><li><a href="./">documentation</a></li><li><a href="faq.html">faq</a></li><li><a href="../../en/books.html">books</a></li><li><a href="../../en/community.html">community</a></li><li><a href="../../en/enterprise.html">enterprise</a></li><li><br></li><li><a href="https://community.nginx.org">community forum (new)</a></li><li><a href="https://x.com/nginxorg">x.com</a></li><li><a href="https://blog.nginx.org/">blog</a></li><li><br></li><li><a href="njs/">njs</a></li><li><a href="https://github.com/nginx/kubernetes-ingress">ingress controller</a></li><li><a href="https://github.com/nginx/nginx-gateway-fabric">gateway fabric</a></li></ul></div></nav></div><div id="content"><h2>Contributing Changes</h2><table width="100%"><tr><td align="left"><a href="#getting_sources">Getting Sources</a><br><a href="#formatting_changes">Formatting Changes</a><br><a href="#before_submitting">Before Submitting</a><br><a href="#submitting_changes">Submitting Changes</a><br><a href="#website">Website</a><br><a href="#license">License</a><br></td></tr></table><a name="getting_sources"></a><center><h4>Getting Sources</h4></center><p>
+<a href="https://github.com">GitHub</a> is used
+to store source code.
+The <a href="https://github.com/nginx/nginx">repository</a> can be cloned
+with the following command:
+</p> <blockquote class="example"><pre>
+git clone https://github.com/nginx/nginx.git
+</pre></blockquote><p> 
+</p><a name="formatting_changes"></a><center><h4>Formatting Changes</h4></center><p>
+Changes should be formatted according to the
+<a href="../docs/dev/development_guide.html#code_style">code style</a>
+used by nginx.
+Sometimes, there is no clear rule; in such cases
+examine how existing nginx sources are formatted and mimic this style.
+Changes will more likely be accepted if style corresponds to the surrounding
+code.
+</p><p>
+<a href="https://docs.github.com/en/pull-requests/committing-changes-to-your-project/creating-and-editing-commits/about-commits">Commit</a>
+the changes in your nginx GitHub fork.
+Please ensure that the specified
+<a href="https://docs.github.com/en/get-started/getting-started-with-git/setting-your-username-in-git">e-mail</a>
+address and real name of the author are correct.
+</p><p>
+The commit message should have a single-line synopsis followed by verbose
+description after an empty line.
+Limit the subject and commit message body lines to 72 characters.
+The resulting commit can be obtained using the
+<code>git show</code> command:
+</p> <blockquote class="example"><pre>
+commit 067d766f210ee914b750d79d9284cbf8801058f3
+Author: Zoey &lt;username@example.com&gt;
+Date:   Sun Apr 5 11:31:15 2026 +0200
+
+    Fix $request_port and $is_request_port in subrequests
+
+    Closes #1247.
+
+diff --git a/src/http/ngx_http_core_module.c b/src/http/ngx_http_core_module.c
+index 0c46106db..53ddf39bb 100644
+--- a/src/http/ngx_http_core_module.c
++++ b/src/http/ngx_http_core_module.c
+@@ -2453,6 +2453,8 @@ ngx_http_subrequest(ngx_http_request_t *r,
+     sr-&gt;method = NGX_HTTP_GET;
+     sr-&gt;http_version = r-&gt;http_version;
+
++    sr-&gt;port = r-&gt;port;
++
+     sr-&gt;request_line = r-&gt;request_line;
+     sr-&gt;uri = *uri;
+
+</pre></blockquote><p> 
+</p><a name="before_submitting"></a><center><h4>Before Submitting</h4></center><p>
+Several points are worth to consider before submitting changes:
+</p> <ul class="compact">
+
+<li>
+The proposed changes should work properly on a wide range of
+<a href="../index.html#tested_os_and_platforms">supported
+platforms</a>.
+</li>
+
+<li>
+Try to make it clear why the suggested change is needed, and provide a use
+case, if possible.
+</li>
+
+<li>
+Passing your changes through the test suite is a good way to ensure
+that they do not cause a regression.
+The <a href="https://github.com/nginx/nginx-tests">repository</a> with
+tests can be cloned with the following command:
+<blockquote class="example"><pre>
+git clone https://github.com/nginx/nginx-tests.git
+</pre></blockquote>
+</li>
+
+</ul><p> 
+</p><a name="submitting_changes"></a><center><h4>Submitting Changes</h4></center><p>
+The proposed changes should be submitted from your fork to
+<a href="https://github.com/nginx/nginx">nginx repository</a>
+as a
+<a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork">pull request</a>.
+</p><a name="website"></a><center><h4>Website</h4></center><p>
+GitHub is used to store the sources for this website.
+The <a href="https://www.github.com/nginx/nginx.org">repository</a>
+can be cloned with the following command:
+</p> <blockquote class="example"><pre>
+git clone https://github.com/nginx/nginx.org.git
+</pre></blockquote><p> 
+Documentation changes should be submitted from your fork
+as a pull request.
+</p><a name="license"></a><center><h4>License</h4></center><p>
+Submitting changes implies granting project a permission to use it under
+an appropriate <a href="../../LICENSE">license</a>.
+</p></div></div></body></html>

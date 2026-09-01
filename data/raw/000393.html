@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 8.3: PostgreSQL 8.3.23 Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/8.3/index.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2013-02-07T10:21:16" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="PostgreSQL 8.3.23 Documentation" />
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?7257af21" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?7257af21">
+
+  <script src="/media/js/theme.js?7257af21"></script>
+
+  
+  <meta name="robots" content="nofollow" />
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/index.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">August 13, 2026: <a href="/about/news/postgresql-186-1711-1615-1519-1424-and-19-beta-3-released-3365/">PostgreSQL 18.6, 17.11, 16.15, 15.19, 14.24 and 19 Beta 3 Released!</a>
+
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/8.3/index.html">PostgreSQL 8.3</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/index.html" title="PostgreSQL 18 - PostgreSQL 8.3.23 Documentation" >Current</a>
+                          (<a href="/docs/18/index.html" title="PostgreSQL 18 - PostgreSQL 8.3.23 Documentation" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/index.html" title="PostgreSQL 17 - PostgreSQL 8.3.23 Documentation" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/index.html" title="PostgreSQL 16 - PostgreSQL 8.3.23 Documentation" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/index.html" title="PostgreSQL 15 - PostgreSQL 8.3.23 Documentation" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/index.html" title="PostgreSQL 14 - PostgreSQL 8.3.23 Documentation" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/19/index.html" title="PostgreSQL 19 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">19</a>
+                    
+                       / 
+                      <a href="/docs/devel/index.html" title="PostgreSQL devel - PostgreSQL 8.3.23 Documentation"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/index.html" title="PostgreSQL 13 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/index.html" title="PostgreSQL 12 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/index.html" title="PostgreSQL 11 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/index.html" title="PostgreSQL 10 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/index.html" title="PostgreSQL 9.6 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/index.html" title="PostgreSQL 9.5 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/index.html" title="PostgreSQL 9.4 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/index.html" title="PostgreSQL 9.3 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/index.html" title="PostgreSQL 9.2 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/index.html" title="PostgreSQL 9.1 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/index.html" title="PostgreSQL 9.0 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/index.html" title="PostgreSQL 8.4 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/index.html" title="PostgreSQL 8.3 - PostgreSQL 8.3.23 Documentation" class="docs-version-selected" rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/index.html" title="PostgreSQL 8.2 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/index.html" title="PostgreSQL 8.1 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/index.html" title="PostgreSQL 8.0 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/index.html" title="PostgreSQL 7.4 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/index.html" title="PostgreSQL 7.3 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/index.html" title="PostgreSQL 7.2 - PostgreSQL 8.3.23 Documentation"  rel="nofollow">7.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/8.3/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+	  <div class="text-center alert-warning">
+	    This documentation is for an unsupported version of PostgreSQL.<br/>
+	    You may want to view the same page for the
+	    <a href="/docs/current/index.html" title="PostgreSQL  - PostgreSQL 8.3.23 Documentation">current</a>
+	    version, or one of the other supported versions listed above instead.
+	  </div>
+
+          <div id="docContent">
+            <div class="BOOK">
+  <a name="POSTGRES" id="POSTGRES"></a>
+
+  <div class="TITLEPAGE">
+    <h1 class="TITLE"><a name="POSTGRES" id="POSTGRES">PostgreSQL
+    8.3.23 Documentation</a></h1>
+
+    <h3 class="CORPAUTHOR">The PostgreSQL Global Development
+    Group</h3>
+
+    <p class="COPYRIGHT"><a href="LEGALNOTICE.html">Copyright</a> ©
+    1996-2013 The PostgreSQL Global Development Group</p>
+    <hr />
+  </div>
+
+  <div class="TOC">
+    <dl>
+      <dt class="c1">Table of Contents</dt>
+
+      <dt><a href="preface.html">Preface</a></dt>
+
+      <dd>
+        <dl>
+          <dt><a href="intro-whatis.html">What is <span class=
+          "PRODUCTNAME">PostgreSQL</span>?</a></dt>
+
+          <dt><a href="history.html">A Brief History of
+          <span class="PRODUCTNAME">PostgreSQL</span></a></dt>
+
+          <dt><a href="notation.html">Conventions</a></dt>
+
+          <dt><a href="resources.html">Further Information</a></dt>
+
+          <dt><a href="bug-reporting.html">Bug Reporting
+          Guidelines</a></dt>
+        </dl>
+      </dd>
+
+      <dt>I. <a href="tutorial.html">Tutorial</a></dt>
+
+      <dd>
+        <dl>
+          <dt>1. <a href="tutorial-start.html">Getting
+          Started</a></dt>
+
+          <dt>2. <a href="tutorial-sql.html">The <acronym class=
+          "ACRONYM">SQL</acronym> Language</a></dt>
+
+          <dt>3. <a href="tutorial-advanced.html">Advanced
+          Features</a></dt>
+        </dl>
+      </dd>
+
+      <dt>II. <a href="sql.html">The SQL Language</a></dt>
+
+      <dd>
+        <dl>
+          <dt>4. <a href="sql-syntax.html">SQL Syntax</a></dt>
+
+          <dt>5. <a href="ddl.html">Data Definition</a></dt>
+
+          <dt>6. <a href="dml.html">Data Manipulation</a></dt>
+
+          <dt>7. <a href="queries.html">Queries</a></dt>
+
+          <dt>8. <a href="datatype.html">Data Types</a></dt>
+
+          <dt>9. <a href="functions.html">Functions and
+          Operators</a></dt>
+
+          <dt>10. <a href="typeconv.html">Type Conversion</a></dt>
+
+          <dt>11. <a href="indexes.html">Indexes</a></dt>
+
+          <dt>12. <a href="textsearch.html">Full Text
+          Search</a></dt>
+
+          <dt>13. <a href="mvcc.html">Concurrency Control</a></dt>
+
+          <dt>14. <a href="performance-tips.html">Performance
+          Tips</a></dt>
+        </dl>
+      </dd>
+
+      <dt>III. <a href="admin.html">Server Administration</a></dt>
+
+      <dd>
+        <dl>
+          <dt>15. <a href="installation.html">Installation
+          Instructions</a></dt>
+
+          <dt>16. <a href="install-win32.html">Installation on
+          <span class="PRODUCTNAME">Windows</span></a></dt>
+
+          <dt>17. <a href="runtime.html">Operating System
+          Environment</a></dt>
+
+          <dt>18. <a href="runtime-config.html">Server
+          Configuration</a></dt>
+
+          <dt>19. <a href="user-manag.html">Database Roles and
+          Privileges</a></dt>
+
+          <dt>20. <a href="managing-databases.html">Managing
+          Databases</a></dt>
+
+          <dt>21. <a href="client-authentication.html">Client
+          Authentication</a></dt>
+
+          <dt>22. <a href="charset.html">Localization</a></dt>
+
+          <dt>23. <a href="maintenance.html">Routine Database
+          Maintenance Tasks</a></dt>
+
+          <dt>24. <a href="backup.html">Backup and Restore</a></dt>
+
+          <dt>25. <a href="high-availability.html">High
+          Availability, Load Balancing, and Replication</a></dt>
+
+          <dt>26. <a href="monitoring.html">Monitoring Database
+          Activity</a></dt>
+
+          <dt>27. <a href="diskusage.html">Monitoring Disk
+          Usage</a></dt>
+
+          <dt>28. <a href="wal.html">Reliability and the
+          Write-Ahead Log</a></dt>
+
+          <dt>29. <a href="regress.html">Regression Tests</a></dt>
+        </dl>
+      </dd>
+
+      <dt>IV. <a href="client-interfaces.html">Client
+      Interfaces</a></dt>
+
+      <dd>
+        <dl>
+          <dt>30. <a href="libpq.html"><span class=
+          "APPLICATION">libpq</span> - C Library</a></dt>
+
+          <dt>31. <a href="largeobjects.html">Large
+          Objects</a></dt>
+
+          <dt>32. <a href="ecpg.html"><span class=
+          "APPLICATION">ECPG</span> - Embedded <acronym class=
+          "ACRONYM">SQL</acronym> in C</a></dt>
+
+          <dt>33. <a href="information-schema.html">The Information
+          Schema</a></dt>
+        </dl>
+      </dd>
+
+      <dt>V. <a href="server-programming.html">Server
+      Programming</a></dt>
+
+      <dd>
+        <dl>
+          <dt>34. <a href="extend.html">Extending <acronym class=
+          "ACRONYM">SQL</acronym></a></dt>
+
+          <dt>35. <a href="triggers.html">Triggers</a></dt>
+
+          <dt>36. <a href="rules.html">The Rule System</a></dt>
+
+          <dt>37. <a href="xplang.html">Procedural
+          Languages</a></dt>
+
+          <dt>38. <a href="plpgsql.html"><span class=
+          "APPLICATION">PL/pgSQL</span> - <acronym class=
+          "ACRONYM">SQL</acronym> Procedural Language</a></dt>
+
+          <dt>39. <a href="pltcl.html">PL/Tcl - Tcl Procedural
+          Language</a></dt>
+
+          <dt>40. <a href="plperl.html">PL/Perl - Perl Procedural
+          Language</a></dt>
+
+          <dt>41. <a href="plpython.html">PL/Python - Python
+          Procedural Language</a></dt>
+
+          <dt>42. <a href="spi.html">Server Programming
+          Interface</a></dt>
+        </dl>
+      </dd>
+
+      <dt>VI. <a href="reference.html">Reference</a></dt>
+
+      <dd>
+        <dl>
+          <dt>I. <a href="sql-commands.html">SQL Commands</a></dt>
+
+          <dt>II. <a href="reference-client.html">PostgreSQL Client
+          Applications</a></dt>
+
+          <dt>III. <a href="reference-server.html">PostgreSQL
+          Server Applications</a></dt>
+        </dl>
+      </dd>
+
+      <dt>VII. <a href="internals.html">Internals</a></dt>
+
+      <dd>
+        <dl>
+          <dt>43. <a href="overview.html">Overview of PostgreSQL
+          Internals</a></dt>
+
+          <dt>44. <a href="catalogs.html">System Catalogs</a></dt>
+
+          <dt>45. <a href="protocol.html">Frontend/Backend
+          Protocol</a></dt>
+
+          <dt>46. <a href="source.html">PostgreSQL Coding
+          Conventions</a></dt>
+
+          <dt>47. <a href="nls.html">Native Language
+          Support</a></dt>
+
+          <dt>48. <a href="plhandler.html">Writing A Procedural
+          Language Handler</a></dt>
+
+          <dt>49. <a href="geqo.html">Genetic Query
+          Optimizer</a></dt>
+
+          <dt>50. <a href="indexam.html">Index Access Method
+          Interface Definition</a></dt>
+
+          <dt>51. <a href="gist.html">GiST Indexes</a></dt>
+
+          <dt>52. <a href="gin.html">GIN Indexes</a></dt>
+
+          <dt>53. <a href="storage.html">Database Physical
+          Storage</a></dt>
+
+          <dt>54. <a href="bki.html"><acronym class=
+          "ACRONYM">BKI</acronym> Backend Interface</a></dt>
+
+          <dt>55. <a href="planner-stats-details.html">How the
+          Planner Uses Statistics</a></dt>
+        </dl>
+      </dd>
+
+      <dt>VIII. <a href="appendixes.html">Appendixes</a></dt>
+
+      <dd>
+        <dl>
+          <dt>A. <a href="errcodes-appendix.html"><span class=
+          "PRODUCTNAME">PostgreSQL</span> Error Codes</a></dt>
+
+          <dt>B. <a href="datetime-appendix.html">Date/Time
+          Support</a></dt>
+
+          <dt>C. <a href=
+          "sql-keywords-appendix.html"><acronym class=
+          "ACRONYM">SQL</acronym> Key Words</a></dt>
+
+          <dt>D. <a href="features.html">SQL Conformance</a></dt>
+
+          <dt>E. <a href="release.html">Release Notes</a></dt>
+
+          <dt>F. <a href="contrib.html">Additional Supplied
+          Modules</a></dt>
+
+          <dt>G. <a href="external-projects.html">External
+          Projects</a></dt>
+
+          <dt>H. <a href="sourcerepo.html">The Source Code
+          Repository</a></dt>
+
+          <dt>I. <a href="docguide.html">Documentation</a></dt>
+
+          <dt>J. <a href="acronyms.html">Acronyms</a></dt>
+        </dl>
+      </dd>
+
+      <dt><a href="biblio.html">Bibliography</a></dt>
+
+      <dt><a href="bookindex.html">Index</a></dt>
+    </dl>
+  </div>
+</div>
+
+<div class="NAVFOOTER">
+  <hr class="c2" width="100%" />
+
+  <table summary="Footer navigation table" width="100%" border="0"
+  cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="33%" align="left" valign="top">&nbsp;</td>
+
+      <td width="34%" align="center" valign="top">&nbsp;</td>
+
+      <td width="33%" align="right" valign="top"><a href=
+      "preface.html" accesskey="N">Next</a></td>
+    </tr>
+
+    <tr>
+      <td width="33%" align="left" valign="top">&nbsp;</td>
+
+      <td width="34%" align="center" valign="top">&nbsp;</td>
+
+      <td width="33%" align="right" valign="top">Preface</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?7257af21"></script>
+
+  </body>
+</html>

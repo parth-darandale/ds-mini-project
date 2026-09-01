@@ -1,0 +1,1380 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <title>PostgreSQL: Documentation: 7.4: PostgreSQL 7.4.30 Documentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="Content-Type" content="text/xhtml; charset=utf-8" />
+   
+  <meta name="theme-color" content="#336791"/>
+  <meta name="copyright" content="The PostgreSQL Global Development Group" />
+  <meta property="og:url" content="https://www.postgresql.org/docs/7.4/index.html" />
+  <meta property="og:type" content="article" />
+
+  <meta property="article:published_time" content="2012-01-01T00:00:00" />
+  <meta property="og:image" content="https://www.postgresql.org/media/img/about/press/elephant.png" />
+  <meta property="og:title" content="PostgreSQL 7.4.30 Documentation" />
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="PostgreSQL Documentation" />
+  <link href="/media/css/fontawesome.css?7257af21" rel="stylesheet">
+  <link rel="stylesheet" href="/media/css/bootstrap-4.4.1.min.css">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  
+  <link rel="stylesheet" type="text/css" href="/dyncss/base.css?7257af21">
+
+  <script src="/media/js/theme.js?7257af21"></script>
+
+  
+  <meta name="robots" content="nofollow" />
+
+  <link rel="canonical" href="https://www.postgresql.org/docs/current/index.html" />
+
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row justify-content-md-center">
+        <div class="col">
+          <!-- Header -->
+          <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand p-0" href="/">
+              <img class="logo" src="/media/img/about/press/elephant.png" alt="PostgreSQL Elephant Logo">
+            </a>
+            <input type="checkbox" id="navbar-toggler" aria-controls="pgNavbar" aria-expanded="false" aria-label="Toggle navigation">
+            <label for="navbar-toggler" id="navbar-toggler-label" class="navbar-toggler" tabindex="0"><span class="navbar-toggler-icon"></span></label>
+            <div class="navbar-collapse" id="pgNavbar">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item p-2"><a href="/" title="Home">Home</a></li>
+                <li class="nav-item p-2"><a href="/about/" title="About">About</a></li>
+                <li class="nav-item p-2"><a href="/download/" title="Download">Download</a></li>
+                <li class="nav-item p-2"><a href="/docs/" title="Documentation">Documentation</a></li>
+                <li class="nav-item p-2"><a href="/community/" title="Community">Community</a></li>
+                <li class="nav-item p-2"><a href="/developer/" title="Developers">Developers</a></li>
+                <li class="nav-item p-2"><a href="/support/" title="Support">Support</a></li>
+                <li class="nav-item p-2"><a href="/about/donate/" title="Donate">Donate</a></li>
+                <li class="nav-item p-2"><a href="/account/" title="Your account">Your account</a></li>
+              </ul>
+              <form role="search" method="get" action="/search/">
+                <div class="input-group">
+                  <input id="q" name="q" type="text" size="20" maxlength="255" accesskey="s"  class="form-control" placeholder="Search for...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+              <form id="form-theme" class="form-inline d-none">
+                <button id="btn-theme" class="btn btn-default ml-1" type="button"></button>
+              </form>
+            </div>
+          </nav>
+        </div>
+      </div>
+      <div class="row justify-content-center pg-shout-box">
+        <div class="col text-white text-center">August 13, 2026: <a href="/about/news/postgresql-186-1711-1615-1519-1424-and-19-beta-3-released-3365/">PostgreSQL 18.6, 17.11, 16.15, 15.19, 14.24 and 19 Beta 3 Released!</a>
+
+</div>
+      </div>
+    </div>
+    
+    <div class="container-fluid margin">
+      <div class="row">
+        <div id="pgContentWrap" class="col-11">
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <div class="row">
+                <div class="col">
+                  <div>
+                    <a href="/docs/" title="Documentation">Documentation</a> &rarr; <a href="/docs/7.4/index.html">PostgreSQL 7.4</a>
+                  </div>
+                </div>
+              </div>
+              
+                <div class="row">
+                  <div class="col">
+                    Supported Versions:
+                      
+                        
+                        
+                          <a href="/docs/current/index.html" title="PostgreSQL 18 - PostgreSQL 7.4.30 Documentation" >Current</a>
+                          (<a href="/docs/18/index.html" title="PostgreSQL 18 - PostgreSQL 7.4.30 Documentation" >18</a>)
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/17/index.html" title="PostgreSQL 17 - PostgreSQL 7.4.30 Documentation" >17</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/16/index.html" title="PostgreSQL 16 - PostgreSQL 7.4.30 Documentation" >16</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/15/index.html" title="PostgreSQL 15 - PostgreSQL 7.4.30 Documentation" >15</a>
+                        
+                      
+                         / 
+                        
+                          <a href="/docs/14/index.html" title="PostgreSQL 14 - PostgreSQL 7.4.30 Documentation" >14</a>
+                        
+                      
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col">
+                    Development Versions:
+                    
+                      
+                      <a href="/docs/19/index.html" title="PostgreSQL 19 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">19</a>
+                    
+                       / 
+                      <a href="/docs/devel/index.html" title="PostgreSQL devel - PostgreSQL 7.4.30 Documentation"  rel="nofollow">devel</a>
+                    
+                  </div>
+                </div>
+              
+              
+                <div class="row">
+                  <div class="col-12">
+                    Unsupported versions:
+                    
+                      
+                      <a href="/docs/13/index.html" title="PostgreSQL 13 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">13</a>
+                    
+                       / 
+                      <a href="/docs/12/index.html" title="PostgreSQL 12 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">12</a>
+                    
+                       / 
+                      <a href="/docs/11/index.html" title="PostgreSQL 11 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">11</a>
+                    
+                       / 
+                      <a href="/docs/10/index.html" title="PostgreSQL 10 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">10</a>
+                    
+                       / 
+                      <a href="/docs/9.6/index.html" title="PostgreSQL 9.6 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">9.6</a>
+                    
+                       / 
+                      <a href="/docs/9.5/index.html" title="PostgreSQL 9.5 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">9.5</a>
+                    
+                       / 
+                      <a href="/docs/9.4/index.html" title="PostgreSQL 9.4 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">9.4</a>
+                    
+                       / 
+                      <a href="/docs/9.3/index.html" title="PostgreSQL 9.3 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">9.3</a>
+                    
+                       / 
+                      <a href="/docs/9.2/index.html" title="PostgreSQL 9.2 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">9.2</a>
+                    
+                       / 
+                      <a href="/docs/9.1/index.html" title="PostgreSQL 9.1 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">9.1</a>
+                    
+                       / 
+                      <a href="/docs/9.0/index.html" title="PostgreSQL 9.0 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">9.0</a>
+                    
+                       / 
+                      <a href="/docs/8.4/index.html" title="PostgreSQL 8.4 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">8.4</a>
+                    
+                       / 
+                      <a href="/docs/8.3/index.html" title="PostgreSQL 8.3 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">8.3</a>
+                    
+                       / 
+                      <a href="/docs/8.2/index.html" title="PostgreSQL 8.2 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">8.2</a>
+                    
+                       / 
+                      <a href="/docs/8.1/index.html" title="PostgreSQL 8.1 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">8.1</a>
+                    
+                       / 
+                      <a href="/docs/8.0/index.html" title="PostgreSQL 8.0 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">8.0</a>
+                    
+                       / 
+                      <a href="/docs/7.4/index.html" title="PostgreSQL 7.4 - PostgreSQL 7.4.30 Documentation" class="docs-version-selected" rel="nofollow">7.4</a>
+                    
+                       / 
+                      <a href="/docs/7.3/index.html" title="PostgreSQL 7.3 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">7.3</a>
+                    
+                       / 
+                      <a href="/docs/7.2/index.html" title="PostgreSQL 7.2 - PostgreSQL 7.4.30 Documentation"  rel="nofollow">7.2</a>
+                    
+                  </div>
+                </div>
+              
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-1">
+              <form id="docSearchForm" role="search" method="get" action="/search/">
+                <input type="hidden" name="u" value="/docs/7.4/" />
+                <div class="input-group">
+                  <input type="text" id="q" name="q" class="form-control" placeholder="Search the documentation for..."/>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit"><i class="fas fa-search"></i></button>
+                  </span>
+                </div><!-- /input-group -->
+              </form>
+            </div>
+          </div>
+
+	  <div class="text-center alert-warning">
+	    This documentation is for an unsupported version of PostgreSQL.<br/>
+	    You may want to view the same page for the
+	    <a href="/docs/current/index.html" title="PostgreSQL  - PostgreSQL 7.4.30 Documentation">current</a>
+	    version, or one of the other supported versions listed above instead.
+	  </div>
+
+          <div id="docContent">
+            <div class="BOOK">
+  <a name="POSTGRES" id="POSTGRES"></a>
+
+  <div class="TITLEPAGE">
+    <h1 class="TITLE"><a name="POSTGRES" id="POSTGRES">PostgreSQL
+    7.4.30 Documentation</a></h1>
+
+    <h3 class="CORPAUTHOR">The PostgreSQL Global Development
+    Group</h3>
+
+    <p class="COPYRIGHT"><a href="LEGALNOTICE.html">Copyright</a> ©
+    1996-2003 The PostgreSQL Global Development Group</p>
+    <hr />
+  </div>
+
+  <div class="TOC">
+    <dl>
+      <dt class="c1">Table of Contents</dt>
+
+      <dt><a href="preface.html">Preface</a></dt>
+
+      <dd>
+        <dl>
+          <dt><a href="preface.html#INTRO-WHATIS">What is
+          <span class="PRODUCTNAME">PostgreSQL</span>?</a></dt>
+
+          <dt><a href="history.html">A Brief History of
+          <span class="PRODUCTNAME">PostgreSQL</span></a></dt>
+
+          <dt><a href="notation.html">Conventions</a></dt>
+
+          <dt><a href="resources.html">Further Information</a></dt>
+
+          <dt><a href="bug-reporting.html">Bug Reporting
+          Guidelines</a></dt>
+        </dl>
+      </dd>
+
+      <dt>I. <a href="tutorial.html">Tutorial</a></dt>
+
+      <dd>
+        <dl>
+          <dt>1. <a href="tutorial-start.html">Getting
+          Started</a></dt>
+
+          <dt>2. <a href="tutorial-sql.html">The <acronym class=
+          "ACRONYM">SQL</acronym> Language</a></dt>
+
+          <dt>3. <a href="tutorial-advanced.html">Advanced
+          Features</a></dt>
+        </dl>
+      </dd>
+
+      <dt>II. <a href="sql.html">The SQL Language</a></dt>
+
+      <dd>
+        <dl>
+          <dt>4. <a href="sql-syntax.html">SQL Syntax</a></dt>
+
+          <dt>5. <a href="ddl.html">Data Definition</a></dt>
+
+          <dt>6. <a href="dml.html">Data Manipulation</a></dt>
+
+          <dt>7. <a href="queries.html">Queries</a></dt>
+
+          <dt>8. <a href="datatype.html">Data Types</a></dt>
+
+          <dt>9. <a href="functions.html">Functions and
+          Operators</a></dt>
+
+          <dt>10. <a href="typeconv.html">Type Conversion</a></dt>
+
+          <dt>11. <a href="indexes.html">Indexes</a></dt>
+
+          <dt>12. <a href="mvcc.html">Concurrency Control</a></dt>
+
+          <dt>13. <a href="performance-tips.html">Performance
+          Tips</a></dt>
+        </dl>
+      </dd>
+
+      <dt>III. <a href="admin.html">Server Administration</a></dt>
+
+      <dd>
+        <dl>
+          <dt>14. <a href="installation.html">Installation
+          Instructions</a></dt>
+
+          <dt>15. <a href="install-win32.html">Installation on
+          <span class="PRODUCTNAME">Windows</span></a></dt>
+
+          <dt>16. <a href="runtime.html">Server Run-time
+          Environment</a></dt>
+
+          <dt>17. <a href="user-manag.html">Database Users and
+          Privileges</a></dt>
+
+          <dt>18. <a href="managing-databases.html">Managing
+          Databases</a></dt>
+
+          <dt>19. <a href="client-authentication.html">Client
+          Authentication</a></dt>
+
+          <dt>20. <a href="charset.html">Localization</a></dt>
+
+          <dt>21. <a href="maintenance.html">Routine Database
+          Maintenance Tasks</a></dt>
+
+          <dt>22. <a href="backup.html">Backup and Restore</a></dt>
+
+          <dt>23. <a href="monitoring.html">Monitoring Database
+          Activity</a></dt>
+
+          <dt>24. <a href="diskusage.html">Monitoring Disk
+          Usage</a></dt>
+
+          <dt>25. <a href="wal.html">Write-Ahead Logging
+          (<acronym class="ACRONYM">WAL</acronym>)</a></dt>
+
+          <dt>26. <a href="regress.html">Regression Tests</a></dt>
+        </dl>
+      </dd>
+
+      <dt>IV. <a href="client-interfaces.html">Client
+      Interfaces</a></dt>
+
+      <dd>
+        <dl>
+          <dt>27. <a href="libpq.html"><span class=
+          "APPLICATION">libpq</span> - C Library</a></dt>
+
+          <dt>28. <a href="largeobjects.html">Large
+          Objects</a></dt>
+
+          <dt>29. <a href="pgtcl.html"><span class=
+          "APPLICATION">pgtcl</span> - Tcl Binding Library</a></dt>
+
+          <dt>30. <a href="ecpg.html"><span class=
+          "APPLICATION">ECPG</span> - Embedded <acronym class=
+          "ACRONYM">SQL</acronym> in C</a></dt>
+
+          <dt>31. <a href="jdbc.html"><acronym class=
+          "ACRONYM">JDBC</acronym> Interface</a></dt>
+
+          <dt>32. <a href="information-schema.html">The Information
+          Schema</a></dt>
+        </dl>
+      </dd>
+
+      <dt>V. <a href="server-programming.html">Server
+      Programming</a></dt>
+
+      <dd>
+        <dl>
+          <dt>33. <a href="extend.html">Extending <acronym class=
+          "ACRONYM">SQL</acronym></a></dt>
+
+          <dt>34. <a href="rules.html">The Rule System</a></dt>
+
+          <dt>35. <a href="triggers.html">Triggers</a></dt>
+
+          <dt>36. <a href="xplang.html">Procedural
+          Languages</a></dt>
+
+          <dt>37. <a href="plpgsql.html"><span class=
+          "APPLICATION">PL/pgSQL</span> - <acronym class=
+          "ACRONYM">SQL</acronym> Procedural Language</a></dt>
+
+          <dt>38. <a href="pltcl.html">PL/Tcl - Tcl Procedural
+          Language</a></dt>
+
+          <dt>39. <a href="plperl.html">PL/Perl - Perl Procedural
+          Language</a></dt>
+
+          <dt>40. <a href="plpython.html">PL/Python - Python
+          Procedural Language</a></dt>
+
+          <dt>41. <a href="spi.html">Server Programming
+          Interface</a></dt>
+        </dl>
+      </dd>
+
+      <dt>VI. <a href="reference.html">Reference</a></dt>
+
+      <dd>
+        <dl>
+          <dt>I. <a href="sql-commands.html">SQL Commands</a></dt>
+
+          <dt>II. <a href="reference-client.html">PostgreSQL Client
+          Applications</a></dt>
+
+          <dt>III. <a href="reference-server.html">PostgreSQL
+          Server Applications</a></dt>
+        </dl>
+      </dd>
+
+      <dt>VII. <a href="internals.html">Internals</a></dt>
+
+      <dd>
+        <dl>
+          <dt>42. <a href="overview.html">Overview of PostgreSQL
+          Internals</a></dt>
+
+          <dt>43. <a href="catalogs.html">System Catalogs</a></dt>
+
+          <dt>44. <a href="protocol.html">Frontend/Backend
+          Protocol</a></dt>
+
+          <dt>45. <a href="source.html">PostgreSQL Coding
+          Conventions</a></dt>
+
+          <dt>46. <a href="nls.html">Native Language
+          Support</a></dt>
+
+          <dt>47. <a href="plhandler.html">Writing A Procedural
+          Language Handler</a></dt>
+
+          <dt>48. <a href="geqo.html">Genetic Query
+          Optimizer</a></dt>
+
+          <dt>49. <a href="indexcost.html">Index Cost Estimation
+          Functions</a></dt>
+
+          <dt>50. <a href="gist.html">GiST Indexes</a></dt>
+
+          <dt>51. <a href="page.html">Page Files</a></dt>
+
+          <dt>52. <a href="bki.html"><acronym class=
+          "ACRONYM">BKI</acronym> Backend Interface</a></dt>
+        </dl>
+      </dd>
+
+      <dt>VIII. <a href="appendixes.html">Appendixes</a></dt>
+
+      <dd>
+        <dl>
+          <dt>A. <a href="errcodes-appendix.html"><span class=
+          "PRODUCTNAME">PostgreSQL</span> Error Codes</a></dt>
+
+          <dt>B. <a href="datetime-appendix.html">Date/Time
+          Support</a></dt>
+
+          <dt>C. <a href=
+          "sql-keywords-appendix.html"><acronym class=
+          "ACRONYM">SQL</acronym> Key Words</a></dt>
+
+          <dt>D. <a href="features.html">SQL Conformance</a></dt>
+
+          <dt>E. <a href="release.html">Release Notes</a></dt>
+
+          <dt>F. <a href="sourcerepo.html">The Source Code
+          Repository</a></dt>
+
+          <dt>G. <a href="docguide.html">Documentation</a></dt>
+        </dl>
+      </dd>
+
+      <dt><a href="biblio.html">Bibliography</a></dt>
+
+      <dt><a href="bookindex.html">Index</a></dt>
+    </dl>
+  </div>
+
+  <div class="LOT">
+    <dl class="LOT">
+      <dt class="c1">List of Tables</dt>
+
+      <dt>4-1. <a href=
+      "sql-syntax.html#SQL-PRECEDENCE-TABLE">Operator Precedence
+      (decreasing)</a></dt>
+
+      <dt>8-1. <a href="datatype.html#DATATYPE-TABLE">Data
+      Types</a></dt>
+
+      <dt>8-2. <a href=
+      "datatype.html#DATATYPE-NUMERIC-TABLE">Numeric Types</a></dt>
+
+      <dt>8-3. <a href=
+      "datatype-money.html#DATATYPE-MONEY-TABLE">Monetary
+      Types</a></dt>
+
+      <dt>8-4. <a href=
+      "datatype-character.html#DATATYPE-CHARACTER-TABLE">Character
+      Types</a></dt>
+
+      <dt>8-5. <a href=
+      "datatype-character.html#DATATYPE-CHARACTER-SPECIAL-TABLE">Special
+      Character Types</a></dt>
+
+      <dt>8-6. <a href=
+      "datatype-binary.html#DATATYPE-BINARY-TABLE">Binary Data
+      Types</a></dt>
+
+      <dt>8-7. <a href=
+      "datatype-binary.html#DATATYPE-BINARY-SQLESC"><tt class=
+      "TYPE">bytea</tt> Literal Escaped Octets</a></dt>
+
+      <dt>8-8. <a href=
+      "datatype-binary.html#DATATYPE-BINARY-RESESC"><tt class=
+      "TYPE">bytea</tt> Output Escaped Octets</a></dt>
+
+      <dt>8-9. <a href=
+      "datatype-datetime.html#DATATYPE-DATETIME-TABLE">Date/Time
+      Types</a></dt>
+
+      <dt>8-10. <a href=
+      "datatype-datetime.html#DATATYPE-DATETIME-DATE-TABLE">Date
+      Input</a></dt>
+
+      <dt>8-11. <a href=
+      "datatype-datetime.html#DATATYPE-DATETIME-TIME-TABLE">Time
+      Input</a></dt>
+
+      <dt>8-12. <a href=
+      "datatype-datetime.html#DATATYPE-TIMEZONE-TABLE">Time Zone
+      Input</a></dt>
+
+      <dt>8-13. <a href=
+      "datatype-datetime.html#DATATYPE-DATETIME-SPECIAL-TABLE">Special
+      Date/Time Inputs</a></dt>
+
+      <dt>8-14. <a href=
+      "datatype-datetime.html#DATATYPE-DATETIME-OUTPUT-TABLE">Date/Time
+      Output Styles</a></dt>
+
+      <dt>8-15. <a href=
+      "datatype-datetime.html#DATATYPE-DATETIME-OUTPUT2-TABLE">Date
+      Order Conventions</a></dt>
+
+      <dt>8-16. <a href=
+      "datatype-geometric.html#DATATYPE-GEO-TABLE">Geometric
+      Types</a></dt>
+
+      <dt>8-17. <a href=
+      "datatype-net-types.html#DATATYPE-NET-TYPES-TABLE">Network
+      Address Types</a></dt>
+
+      <dt>8-18. <a href=
+      "datatype-net-types.html#DATATYPE-NET-CIDR-TABLE"><tt class=
+      "TYPE">cidr</tt> Type Input Examples</a></dt>
+
+      <dt>8-19. <a href=
+      "datatype-oid.html#DATATYPE-OID-TABLE">Object Identifier
+      Types</a></dt>
+
+      <dt>8-20. <a href=
+      "datatype-pseudo.html#DATATYPE-PSEUDOTYPES-TABLE">Pseudo-Types</a></dt>
+
+      <dt>9-1. <a href=
+      "functions-comparison.html#FUNCTIONS-COMPARISON-TABLE">Comparison
+      Operators</a></dt>
+
+      <dt>9-2. <a href=
+      "functions-math.html#FUNCTIONS-MATH-OP-TABLE">Mathematical
+      Operators</a></dt>
+
+      <dt>9-3. <a href=
+      "functions-math.html#FUNCTIONS-MATH-BIT-TABLE">Bit String
+      Bitwise Operators</a></dt>
+
+      <dt>9-4. <a href=
+      "functions-math.html#FUNCTIONS-MATH-FUNC-TABLE">Mathematical
+      Functions</a></dt>
+
+      <dt>9-5. <a href=
+      "functions-math.html#FUNCTIONS-MATH-TRIG-TABLE">Trigonometric
+      Functions</a></dt>
+
+      <dt>9-6. <a href=
+      "functions-string.html#FUNCTIONS-STRING-SQL"><acronym class=
+      "ACRONYM">SQL</acronym> String Functions and
+      Operators</a></dt>
+
+      <dt>9-7. <a href=
+      "functions-string.html#FUNCTIONS-STRING-OTHER">Other String
+      Functions</a></dt>
+
+      <dt>9-8. <a href=
+      "functions-string.html#CONVERSION-NAMES">Built-in
+      Conversions</a></dt>
+
+      <dt>9-9. <a href=
+      "functions-binarystring.html#FUNCTIONS-BINARYSTRING-SQL"><acronym class="ACRONYM">
+      SQL</acronym> Binary String Functions and Operators</a></dt>
+
+      <dt>9-10. <a href=
+      "functions-binarystring.html#FUNCTIONS-BINARYSTRING-OTHER">Other
+      Binary String Functions</a></dt>
+
+      <dt>9-11. <a href=
+      "functions-matching.html#FUNCTIONS-POSIX-TABLE">Regular
+      Expression Match Operators</a></dt>
+
+      <dt>9-12. <a href=
+      "functions-matching.html#POSIX-ATOMS-TABLE">Regular
+      Expression Atoms</a></dt>
+
+      <dt>9-13. <a href=
+      "functions-matching.html#POSIX-QUANTIFIERS-TABLE">Regular
+      Expression Quantifiers</a></dt>
+
+      <dt>9-14. <a href=
+      "functions-matching.html#POSIX-CONSTRAINTS-TABLE">Regular
+      Expression Constraints</a></dt>
+
+      <dt>9-15. <a href=
+      "functions-matching.html#POSIX-CHARACTER-ENTRY-ESCAPES-TABLE">
+      Regular Expression Character-Entry Escapes</a></dt>
+
+      <dt>9-16. <a href=
+      "functions-matching.html#POSIX-CLASS-SHORTHAND-ESCAPES-TABLE">
+      Regular Expression Class-Shorthand Escapes</a></dt>
+
+      <dt>9-17. <a href=
+      "functions-matching.html#POSIX-CONSTRAINT-ESCAPES-TABLE">Regular
+      Expression Constraint Escapes</a></dt>
+
+      <dt>9-18. <a href=
+      "functions-matching.html#POSIX-CONSTRAINT-BACKREF-TABLE">Regular
+      Expression Back References</a></dt>
+
+      <dt>9-19. <a href=
+      "functions-matching.html#POSIX-EMBEDDED-OPTIONS-TABLE">ARE
+      Embedded-Option Letters</a></dt>
+
+      <dt>9-20. <a href=
+      "functions-formatting.html#FUNCTIONS-FORMATTING-TABLE">Formatting
+      Functions</a></dt>
+
+      <dt>9-21. <a href=
+      "functions-formatting.html#FUNCTIONS-FORMATTING-DATETIME-TABLE">
+      Template Patterns for Date/Time Formatting</a></dt>
+
+      <dt>9-22. <a href=
+      "functions-formatting.html#FUNCTIONS-FORMATTING-DATETIMEMOD-TABLE">
+      Template Pattern Modifiers for Date/Time Formatting</a></dt>
+
+      <dt>9-23. <a href=
+      "functions-formatting.html#FUNCTIONS-FORMATTING-NUMERIC-TABLE">
+      Template Patterns for Numeric Formatting</a></dt>
+
+      <dt>9-24. <a href=
+      "functions-formatting.html#FUNCTIONS-FORMATTING-EXAMPLES-TABLE">
+      <code class="FUNCTION">to_char</code> Examples</a></dt>
+
+      <dt>9-25. <a href=
+      "functions-datetime.html#OPERATORS-DATETIME-TABLE">Date/Time
+      Operators</a></dt>
+
+      <dt>9-26. <a href=
+      "functions-datetime.html#FUNCTIONS-DATETIME-TABLE">Date/Time
+      Functions</a></dt>
+
+      <dt>9-27. <a href=
+      "functions-datetime.html#FUNCTIONS-DATETIME-ZONECONVERT-TABLE">
+      <tt class="LITERAL">AT TIME ZONE</tt> Variants</a></dt>
+
+      <dt>9-28. <a href=
+      "functions-geometry.html#FUNCTIONS-GEOMETRY-OP-TABLE">Geometric
+      Operators</a></dt>
+
+      <dt>9-29. <a href=
+      "functions-geometry.html#FUNCTIONS-GEOMETRY-FUNC-TABLE">Geometric
+      Functions</a></dt>
+
+      <dt>9-30. <a href=
+      "functions-geometry.html#FUNCTIONS-GEOMETRY-CONV-TABLE">Geometric
+      Type Conversion Functions</a></dt>
+
+      <dt>9-31. <a href=
+      "functions-net.html#CIDR-INET-OPERATORS-TABLE"><tt class=
+      "TYPE">cidr</tt> and <tt class="TYPE">inet</tt>
+      Operators</a></dt>
+
+      <dt>9-32. <a href=
+      "functions-net.html#CIDR-INET-FUNCTIONS-TABLE"><tt class=
+      "TYPE">cidr</tt> and <tt class="TYPE">inet</tt>
+      Functions</a></dt>
+
+      <dt>9-33. <a href=
+      "functions-net.html#MACADDR-FUNCTIONS-TABLE"><tt class=
+      "TYPE">macaddr</tt> Functions</a></dt>
+
+      <dt>9-34. <a href=
+      "functions-sequence.html#FUNCTIONS-SEQUENCE-TABLE">Sequence
+      Functions</a></dt>
+
+      <dt>9-35. <a href=
+      "functions-misc.html#FUNCTIONS-MISC-SESSION-TABLE">Session
+      Information Functions</a></dt>
+
+      <dt>9-36. <a href=
+      "functions-misc.html#FUNCTIONS-MISC-SET-TABLE">Configuration
+      Settings Functions</a></dt>
+
+      <dt>9-37. <a href=
+      "functions-misc.html#FUNCTIONS-MISC-ACCESS-TABLE">Access
+      Privilege Inquiry Functions</a></dt>
+
+      <dt>9-38. <a href=
+      "functions-misc.html#FUNCTIONS-MISC-SCHEMA-TABLE">Schema
+      Visibility Inquiry Functions</a></dt>
+
+      <dt>9-39. <a href=
+      "functions-misc.html#FUNCTIONS-MISC-CATALOG-TABLE">System
+      Catalog Information Functions</a></dt>
+
+      <dt>9-40. <a href=
+      "functions-misc.html#FUNCTIONS-MISC-COMMENT-TABLE">Comment
+      Information Functions</a></dt>
+
+      <dt>9-41. <a href=
+      "functions-array.html#ARRAY-OPERATORS-TABLE"><tt class=
+      "TYPE">array</tt> Operators</a></dt>
+
+      <dt>9-42. <a href=
+      "functions-array.html#ARRAY-FUNCTIONS-TABLE"><tt class=
+      "TYPE">array</tt> Functions</a></dt>
+
+      <dt>9-43. <a href=
+      "functions-aggregate.html#FUNCTIONS-AGGREGATE-TABLE">Aggregate
+      Functions</a></dt>
+
+      <dt>12-1. <a href=
+      "transaction-iso.html#MVCC-ISOLEVEL-TABLE"><acronym class=
+      "ACRONYM">SQL</acronym> Transaction Isolation Levels</a></dt>
+
+      <dt>16-1. <a href=
+      "runtime-config.html#RUNTIME-CONFIG-SHORT-TABLE">Short option
+      key</a></dt>
+
+      <dt>16-2. <a href=
+      "kernel-resources.html#SYSVIPC-PARAMETERS"><span class=
+      "SYSTEMITEM">System V</span> <acronym class=
+      "ACRONYM">IPC</acronym> parameters</a></dt>
+
+      <dt>20-1. <a href="multibyte.html#CHARSET-TABLE">Server
+      Character Sets</a></dt>
+
+      <dt>20-2. <a href=
+      "multibyte.html#MULTIBYTE-TRANSLATION-TABLE">Client/Server
+      Character Set Conversions</a></dt>
+
+      <dt>23-1. <a href=
+      "monitoring-stats.html#MONITORING-STATS-VIEWS-TABLE">Standard
+      Statistics Views</a></dt>
+
+      <dt>23-2. <a href=
+      "monitoring-stats.html#MONITORING-STATS-FUNCS-TABLE">Statistics
+      Access Functions</a></dt>
+
+      <dt>29-1. <a href=
+      "pgtcl.html#PGTCL-COMMANDS-TABLE"><span class=
+      "APPLICATION">pgtcl</span> Commands</a></dt>
+
+      <dt>31-1. <a href=
+      "jdbc-datasource.html#JDBC-DS-CPDS-IMP-TABLE"><code class=
+      "CLASSNAME">ConnectionPoolDataSource</code>
+      Implementations</a></dt>
+
+      <dt>31-2. <a href=
+      "jdbc-datasource.html#JDBC-DS-CPDS-PROPS"><code class=
+      "CLASSNAME">ConnectionPoolDataSource</code> Configuration
+      Properties</a></dt>
+
+      <dt>31-3. <a href=
+      "jdbc-datasource.html#JDBC-DS-DS-IMP"><code class=
+      "CLASSNAME">DataSource</code> Implementations</a></dt>
+
+      <dt>31-4. <a href=
+      "jdbc-datasource.html#JDBC-DS-DS-PROPS"><code class=
+      "CLASSNAME">DataSource</code> Configuration
+      Properties</a></dt>
+
+      <dt>31-5. <a href=
+      "jdbc-datasource.html#JDBC-DS-DS-XPROPS">Additional Pooling
+      <code class="CLASSNAME">DataSource</code> Configuration
+      Properties</a></dt>
+
+      <dt>32-1. <a href=
+      "infoschema-information-schema-catalog-name.html#AEN25427"><tt class="LITERAL">
+      information_schema_catalog_name</tt> Columns</a></dt>
+
+      <dt>32-2. <a href=
+      "infoschema-applicable-roles.html#AEN25449"><tt class=
+      "LITERAL">applicable_roles</tt> Columns</a></dt>
+
+      <dt>32-3. <a href=
+      "infoschema-check-constraints.html#AEN25482"><tt class=
+      "LITERAL">check_constraints</tt> Columns</a></dt>
+
+      <dt>32-4. <a href=
+      "infoschema-column-domain-usage.html#AEN25521"><tt class=
+      "LITERAL">column_domain_usage</tt> Columns</a></dt>
+
+      <dt>32-5. <a href=
+      "infoschema-column-privileges.html#AEN25587"><tt class=
+      "LITERAL">column_privileges</tt> Columns</a></dt>
+
+      <dt>32-6. <a href=
+      "infoschema-column-udt-usage.html#AEN25661"><tt class=
+      "LITERAL">column_udt_usage</tt> Columns</a></dt>
+
+      <dt>32-7. <a href=
+      "infoschema-columns.html#AEN25719"><tt class=
+      "LITERAL">columns</tt> Columns</a></dt>
+
+      <dt>32-8. <a href=
+      "infoschema-constraint-column-usage.html#AEN25969"><tt class=
+      "LITERAL">constraint_column_usage</tt> Columns</a></dt>
+
+      <dt>32-9. <a href=
+      "infoschema-constraint-table-usage.html#AEN26027"><tt class=
+      "LITERAL">constraint_table_usage</tt> Columns</a></dt>
+
+      <dt>32-10. <a href=
+      "infoschema-data-type-privileges.html#AEN26078"><tt class=
+      "LITERAL">data_type_privileges</tt> Columns</a></dt>
+
+      <dt>32-11. <a href=
+      "infoschema-domain-constraints.html#AEN26126"><tt class=
+      "LITERAL">domain_constraints</tt> Columns</a></dt>
+
+      <dt>32-12. <a href=
+      "infoschema-domain-udt-usage.html#AEN26194"><tt class=
+      "LITERAL">domain_udt_usage</tt> Columns</a></dt>
+
+      <dt>32-13. <a href=
+      "infoschema-domains.html#AEN26245"><tt class=
+      "LITERAL">domains</tt> Columns</a></dt>
+
+      <dt>32-14. <a href=
+      "infoschema-element-types.html#AEN26434"><tt class=
+      "LITERAL">element_types</tt> Columns</a></dt>
+
+      <dt>32-15. <a href=
+      "infoschema-enabled-roles.html#AEN26630"><tt class=
+      "LITERAL">enabled_roles</tt> Columns</a></dt>
+
+      <dt>32-16. <a href=
+      "infoschema-key-column-usage.html#AEN26651"><tt class=
+      "LITERAL">key_column_usage</tt> Columns</a></dt>
+
+      <dt>32-17. <a href=
+      "infoschema-parameters.html#AEN26714"><tt class=
+      "LITERAL">parameters</tt> Columns</a></dt>
+
+      <dt>32-18. <a href=
+      "infoschema-referential-constraints.html#AEN26922"><tt class=
+      "LITERAL">referential_constraints</tt> Columns</a></dt>
+
+      <dt>32-19. <a href=
+      "infoschema-role-column-grants.html#AEN27005"><tt class=
+      "LITERAL">role_column_grants</tt> Columns</a></dt>
+
+      <dt>32-20. <a href=
+      "infoschema-role-routine-grants.html#AEN27075"><tt class=
+      "LITERAL">role_routine_grants</tt> Columns</a></dt>
+
+      <dt>32-21. <a href=
+      "infoschema-role-table-grants.html#AEN27156"><tt class=
+      "LITERAL">role_table_grants</tt> Columns</a></dt>
+
+      <dt>32-22. <a href=
+      "infoschema-role-usage-grants.html#AEN27232"><tt class=
+      "LITERAL">role_usage_grants</tt> Columns</a></dt>
+
+      <dt>32-23. <a href=
+      "infoschema-routine-privileges.html#AEN27299"><tt class=
+      "LITERAL">routine_privileges</tt> Columns</a></dt>
+
+      <dt>32-24. <a href=
+      "infoschema-routines.html#AEN27382"><tt class=
+      "LITERAL">routines</tt> Columns</a></dt>
+
+      <dt>32-25. <a href=
+      "infoschema-schemata.html#AEN27742"><tt class=
+      "LITERAL">schemata</tt> Columns</a></dt>
+
+      <dt>32-26. <a href=
+      "infoschema-sql-features.html#AEN27801"><tt class=
+      "LITERAL">sql_features</tt> Columns</a></dt>
+
+      <dt>32-27. <a href=
+      "infoschema-sql-implementation-info.html#AEN27860"><tt class=
+      "LITERAL">sql_implementation_info</tt> Columns</a></dt>
+
+      <dt>32-28. <a href=
+      "infoschema-sql-languages.html#AEN27909"><tt class=
+      "LITERAL">sql_languages</tt> Columns</a></dt>
+
+      <dt>32-29. <a href=
+      "infoschema-sql-packages.html#AEN27975"><tt class=
+      "LITERAL">sql_packages</tt> Columns</a></dt>
+
+      <dt>32-30. <a href=
+      "infoschema-sql-sizing.html#AEN28023"><tt class=
+      "LITERAL">sql_sizing</tt> Columns</a></dt>
+
+      <dt>32-31. <a href=
+      "infoschema-sql-sizing-profiles.html#AEN28063"><tt class=
+      "LITERAL">sql_sizing_profiles</tt> Columns</a></dt>
+
+      <dt>32-32. <a href=
+      "infoschema-table-constraints.html#AEN28108"><tt class=
+      "LITERAL">table_constraints</tt> Columns</a></dt>
+
+      <dt>32-33. <a href=
+      "infoschema-table-privileges.html#AEN28186"><tt class=
+      "LITERAL">table_privileges</tt> Columns</a></dt>
+
+      <dt>32-34. <a href=
+      "infoschema-tables.html#AEN28261"><tt class=
+      "LITERAL">tables</tt> Columns</a></dt>
+
+      <dt>32-35. <a href=
+      "infoschema-triggers.html#AEN28333"><tt class=
+      "LITERAL">triggers</tt> Columns</a></dt>
+
+      <dt>32-36. <a href=
+      "infoschema-usage-privileges.html#AEN28456"><tt class=
+      "LITERAL">usage_privileges</tt> Columns</a></dt>
+
+      <dt>32-37. <a href=
+      "infoschema-view-column-usage.html#AEN28526"><tt class=
+      "LITERAL">view_column_usage</tt> Columns</a></dt>
+
+      <dt>32-38. <a href=
+      "infoschema-view-table-usage.html#AEN28586"><tt class=
+      "LITERAL">view_table_usage</tt> Columns</a></dt>
+
+      <dt>32-39. <a href=
+      "infoschema-views.html#AEN28637"><tt class="LITERAL">views</tt>
+      Columns</a></dt>
+
+      <dt>33-1. <a href=
+      "xfunc-c.html#XFUNC-C-TYPE-TABLE">Equivalent C Types for
+      Built-In SQL Types</a></dt>
+
+      <dt>33-2. <a href=
+      "xindex.html#XINDEX-BTREE-STRAT-TABLE">B-tree
+      Strategies</a></dt>
+
+      <dt>33-3. <a href="xindex.html#XINDEX-HASH-STRAT-TABLE">Hash
+      Strategies</a></dt>
+
+      <dt>33-4. <a href=
+      "xindex.html#XINDEX-RTREE-STRAT-TABLE">R-tree
+      Strategies</a></dt>
+
+      <dt>33-5. <a href=
+      "xindex.html#XINDEX-BTREE-SUPPORT-TABLE">B-tree Support
+      Functions</a></dt>
+
+      <dt>33-6. <a href=
+      "xindex.html#XINDEX-HASH-SUPPORT-TABLE">Hash Support
+      Functions</a></dt>
+
+      <dt>33-7. <a href=
+      "xindex.html#XINDEX-RTREE-SUPPORT-TABLE">R-tree Support
+      Functions</a></dt>
+
+      <dt>33-8. <a href=
+      "xindex.html#XINDEX-GIST-SUPPORT-TABLE">GiST Support
+      Functions</a></dt>
+
+      <dt>43-1. <a href="catalogs.html#CATALOG-TABLE">System
+      Catalogs</a></dt>
+
+      <dt>43-2. <a href=
+      "catalog-pg-aggregate.html#AEN49033"><tt class=
+      "STRUCTNAME">pg_aggregate</tt> Columns</a></dt>
+
+      <dt>43-3. <a href="catalog-pg-am.html#AEN49102"><tt class=
+      "STRUCTNAME">pg_am</tt> Columns</a></dt>
+
+      <dt>43-4. <a href="catalog-pg-amop.html#AEN49312"><tt class=
+      "STRUCTNAME">pg_amop</tt> Columns</a></dt>
+
+      <dt>43-5. <a href=
+      "catalog-pg-amproc.html#AEN49364"><tt class="STRUCTNAME">pg_amproc</tt>
+      Columns</a></dt>
+
+      <dt>43-6. <a href=
+      "catalog-pg-attrdef.html#AEN49410"><tt class=
+      "STRUCTNAME">pg_attrdef</tt> Columns</a></dt>
+
+      <dt>43-7. <a href=
+      "catalog-pg-attribute.html#AEN49465"><tt class=
+      "STRUCTNAME">pg_attribute</tt> Columns</a></dt>
+
+      <dt>43-8. <a href="catalog-pg-cast.html#AEN49634"><tt class=
+      "STRUCTFIELD">pg_cast</tt> Columns</a></dt>
+
+      <dt>43-9. <a href="catalog-pg-class.html#AEN49697"><tt class=
+      "STRUCTNAME">pg_class</tt> Columns</a></dt>
+
+      <dt>43-10. <a href=
+      "catalog-pg-constraint.html#AEN49933"><tt class=
+      "STRUCTNAME">pg_constraint</tt> Columns</a></dt>
+
+      <dt>43-11. <a href=
+      "catalog-pg-conversion.html#AEN50086"><tt class=
+      "STRUCTNAME">pg_conversion</tt> Columns</a></dt>
+
+      <dt>43-12. <a href=
+      "catalog-pg-database.html#AEN50167"><tt class=
+      "STRUCTNAME">pg_database</tt> Columns</a></dt>
+
+      <dt>43-13. <a href=
+      "catalog-pg-depend.html#AEN50273"><tt class=
+      "STRUCTNAME">pg_depend</tt> Columns</a></dt>
+
+      <dt>43-14. <a href=
+      "catalog-pg-description.html#AEN50391"><tt class=
+      "STRUCTNAME">pg_description</tt> Columns</a></dt>
+
+      <dt>43-15. <a href=
+      "catalog-pg-group.html#AEN50447"><tt class="STRUCTNAME">pg_group</tt>
+      Columns</a></dt>
+
+      <dt>43-16. <a href=
+      "catalog-pg-index.html#AEN50490"><tt class="STRUCTNAME">pg_index</tt>
+      Columns</a></dt>
+
+      <dt>43-17. <a href=
+      "catalog-pg-inherits.html#AEN50600"><tt class=
+      "STRUCTNAME">pg_inherits</tt> Columns</a></dt>
+
+      <dt>43-18. <a href=
+      "catalog-pg-language.html#AEN50647"><tt class=
+      "STRUCTNAME">pg_language</tt> Columns</a></dt>
+
+      <dt>43-19. <a href=
+      "catalog-pg-largeobject.html#AEN50723"><tt class=
+      "STRUCTNAME">pg_largeobject</tt> Columns</a></dt>
+
+      <dt>43-20. <a href=
+      "catalog-pg-listener.html#AEN50771"><tt class=
+      "STRUCTNAME">pg_listener</tt> Columns</a></dt>
+
+      <dt>43-21. <a href=
+      "catalog-pg-namespace.html#AEN50811"><tt class=
+      "STRUCTNAME">pg_namespace</tt> Columns</a></dt>
+
+      <dt>43-22. <a href=
+      "catalog-pg-opclass.html#AEN50855"><tt class=
+      "STRUCTNAME">pg_opclass</tt> Columns</a></dt>
+
+      <dt>43-23. <a href=
+      "catalog-pg-operator.html#AEN50947"><tt class=
+      "STRUCTNAME">pg_operator</tt> Columns</a></dt>
+
+      <dt>43-24. <a href="catalog-pg-proc.html#AEN51143"><tt class=
+      "STRUCTNAME">pg_proc</tt> Columns</a></dt>
+
+      <dt>43-25. <a href=
+      "catalog-pg-rewrite.html#AEN51295"><tt class=
+      "STRUCTNAME">pg_rewrite</tt> Columns</a></dt>
+
+      <dt>43-26. <a href=
+      "catalog-pg-shadow.html#AEN51383"><tt class=
+      "STRUCTNAME">pg_shadow</tt> Columns</a></dt>
+
+      <dt>43-27. <a href=
+      "catalog-pg-statistic.html#AEN51468"><tt class=
+      "STRUCTNAME">pg_statistic</tt> Columns</a></dt>
+
+      <dt>43-28. <a href=
+      "catalog-pg-trigger.html#AEN51575"><tt class=
+      "STRUCTNAME">pg_trigger</tt> Columns</a></dt>
+
+      <dt>43-29. <a href="catalog-pg-type.html#AEN51699"><tt class=
+      "STRUCTNAME">pg_type</tt> Columns</a></dt>
+
+      <dt>43-30. <a href="views-overview.html#VIEW-TABLE">System
+      Views</a></dt>
+
+      <dt>43-31. <a href="view-pg-indexes.html#AEN52059"><tt class=
+      "STRUCTNAME">pg_indexes</tt> Columns</a></dt>
+
+      <dt>43-32. <a href="view-pg-locks.html#AEN52118"><tt class=
+      "STRUCTNAME">pg_locks</tt> Columns</a></dt>
+
+      <dt>43-33. <a href="view-pg-rules.html#AEN52200"><tt class=
+      "STRUCTNAME">pg_rules</tt> Columns</a></dt>
+
+      <dt>43-34. <a href=
+      "view-pg-settings.html#AEN52261"><tt class="STRUCTNAME">pg_settings</tt>
+      Columns</a></dt>
+
+      <dt>43-35. <a href="view-pg-stats.html#AEN52347"><tt class=
+      "STRUCTNAME">pg_stats</tt> Columns</a></dt>
+
+      <dt>43-36. <a href="view-pg-tables.html#AEN52455"><tt class=
+      "STRUCTNAME">pg_tables</tt> Columns</a></dt>
+
+      <dt>43-37. <a href="view-pg-user.html#AEN52535"><tt class=
+      "STRUCTNAME">pg_user</tt> Columns</a></dt>
+
+      <dt>43-38. <a href="view-pg-views.html#AEN52610"><tt class=
+      "STRUCTNAME">pg_views</tt> Columns</a></dt>
+
+      <dt>51-1. <a href="page.html#PAGE-TABLE">Sample Page
+      Layout</a></dt>
+
+      <dt>51-2. <a href=
+      "page.html#PAGEHEADERDATA-TABLE">PageHeaderData
+      Layout</a></dt>
+
+      <dt>51-3. <a href=
+      "page.html#HEAPTUPLEHEADERDATA-TABLE">HeapTupleHeaderData
+      Layout</a></dt>
+
+      <dt>A-1. <a href=
+      "errcodes-appendix.html#ERRCODES-TABLE"><span class=
+      "PRODUCTNAME">PostgreSQL</span> Error Codes</a></dt>
+
+      <dt>B-1. <a href=
+      "datetime-keywords.html#DATETIME-MONTH-TABLE">Month
+      Abbreviations</a></dt>
+
+      <dt>B-2. <a href=
+      "datetime-keywords.html#DATETIME-DOW-TABLE">Day of the Week
+      Abbreviations</a></dt>
+
+      <dt>B-3. <a href=
+      "datetime-keywords.html#DATETIME-MOD-TABLE">Date/Time Field
+      Modifiers</a></dt>
+
+      <dt>B-4. <a href=
+      "datetime-keywords.html#DATETIME-TIMEZONE-TABLE">Time Zone
+      Abbreviations</a></dt>
+
+      <dt>B-5. <a href=
+      "datetime-keywords.html#DATETIME-OZTZ-TABLE">Australian Time
+      Zone Abbreviations</a></dt>
+
+      <dt>C-1. <a href=
+      "sql-keywords-appendix.html#KEYWORDS-TABLE"><acronym class=
+      "ACRONYM">SQL</acronym> Key Words</a></dt>
+    </dl>
+  </div>
+
+  <div class="LOT">
+    <dl class="LOT">
+      <dt class="c1">List of Figures</dt>
+
+      <dt>48-1. <a href="geqo-intro2.html#GEQO-DIAGRAM">Structured
+      Diagram of a Genetic Algorithm</a></dt>
+    </dl>
+  </div>
+
+  <div class="LOT">
+    <dl class="LOT">
+      <dt class="c1">List of Examples</dt>
+
+      <dt>8-1. <a href="datatype-character.html#AEN3782">Using the
+      character types</a></dt>
+
+      <dt>8-2. <a href=
+      "datatype-boolean.html#DATATYPE-BOOLEAN-EXAMPLE">Using the
+      <tt class="TYPE">boolean</tt> type</a></dt>
+
+      <dt>8-3. <a href="datatype-bit.html#AEN5128">Using the bit
+      string types</a></dt>
+
+      <dt>10-1. <a href=
+      "typeconv-oper.html#AEN12896">Exponentiation Operator Type
+      Resolution</a></dt>
+
+      <dt>10-2. <a href="typeconv-oper.html#AEN12903">String
+      Concatenation Operator Type Resolution</a></dt>
+
+      <dt>10-3. <a href=
+      "typeconv-oper.html#AEN12915">Absolute-Value and Factorial
+      Operator Type Resolution</a></dt>
+
+      <dt>10-4. <a href="typeconv-func.html#AEN12972">Rounding
+      Function Argument Type Resolution</a></dt>
+
+      <dt>10-5. <a href="typeconv-func.html#AEN12985">Substring
+      Function Type Resolution</a></dt>
+
+      <dt>10-6. <a href="typeconv-query.html#AEN13026"><tt class=
+      "TYPE">character</tt> Storage Type Conversion</a></dt>
+
+      <dt>10-7. <a href="typeconv-union-case.html#AEN13081">Type
+      Resolution with Underspecified Types in a Union</a></dt>
+
+      <dt>10-8. <a href="typeconv-union-case.html#AEN13087">Type
+      Resolution in a Simple Union</a></dt>
+
+      <dt>10-9. <a href="typeconv-union-case.html#AEN13096">Type
+      Resolution in a Transposed Union</a></dt>
+
+      <dt>11-1. <a href=
+      "indexes-partial.html#INDEXES-PARTIAL-EX1">Setting up a
+      Partial Index to Exclude Common Values</a></dt>
+
+      <dt>11-2. <a href=
+      "indexes-partial.html#INDEXES-PARTIAL-EX2">Setting up a
+      Partial Index to Exclude Uninteresting Values</a></dt>
+
+      <dt>11-3. <a href=
+      "indexes-partial.html#INDEXES-PARTIAL-EX3">Setting up a
+      Partial Unique Index</a></dt>
+
+      <dt>19-1. <a href=
+      "client-authentication.html#EXAMPLE-PG-HBA.CONF">An example
+      <tt class="FILENAME">pg_hba.conf</tt> file</a></dt>
+
+      <dt>19-2. <a href=
+      "auth-methods.html#EXAMPLE-PG-IDENT.CONF">An example
+      <tt class="FILENAME">pg_ident.conf</tt> file</a></dt>
+
+      <dt>27-1. <a href=
+      "libpq-example.html#LIBPQ-EXAMPLE-1"><span class=
+      "APPLICATION">libpq</span> Example Program 1</a></dt>
+
+      <dt>27-2. <a href=
+      "libpq-example.html#LIBPQ-EXAMPLE-2"><span class=
+      "APPLICATION">libpq</span> Example Program 2</a></dt>
+
+      <dt>27-3. <a href=
+      "libpq-example.html#LIBPQ-EXAMPLE-3"><span class=
+      "APPLICATION">libpq</span> Example Program 3</a></dt>
+
+      <dt>28-1. <a href="lo-examplesect.html#LO-EXAMPLE">Large
+      Objects with <span class="APPLICATION">libpq</span> Example
+      Program</a></dt>
+
+      <dt>29-1. <a href=
+      "pgtcl-examplesect.html#PGTCL-EXAMPLE"><span class=
+      "APPLICATION">pgtcl</span> Example Program</a></dt>
+
+      <dt>31-1. <a href=
+      "jdbc-query.html#JDBC-QUERY-EXAMPLE">Processing a Simple
+      Query in <acronym class="ACRONYM">JDBC</acronym></a></dt>
+
+      <dt>31-2. <a href="jdbc-query.html#AEN24402">Setting fetch
+      size to turn cursors on and off.</a></dt>
+
+      <dt>31-3. <a href=
+      "jdbc-update.html#JDBC-DELETE-EXAMPLE">Deleting Rows in
+      <acronym class="ACRONYM">JDBC</acronym></a></dt>
+
+      <dt>31-4. <a href=
+      "jdbc-callproc.html#JDBC-CALL-FUNCTION">Calling a built in
+      stored function</a></dt>
+
+      <dt>31-5. <a href=
+      "jdbc-callproc.html#GET-REFCURSOR-FROM-FUNCTION-CALL">Getting
+      <tt class="TYPE">refcursor</tt> values from a
+      function</a></dt>
+
+      <dt>31-6. <a href="jdbc-callproc.html#AEN24518">Treating
+      <tt class="TYPE">refcursor</tt> as a distinct type</a></dt>
+
+      <dt>31-7. <a href=
+      "jdbc-ddl.html#JDBC-DROP-TABLE-EXAMPLE">Dropping a Table in
+      JDBC</a></dt>
+
+      <dt>31-8. <a href=
+      "jdbc-binary-data.html#JDBC-BINARY-DATA-EXAMPLE">Processing
+      Binary Data in <acronym class=
+      "ACRONYM">JDBC</acronym></a></dt>
+
+      <dt>31-9. <a href=
+      "jdbc-datasource.html#JDBC-DS-EXAMPLE"><tt class=
+      "LITERAL">DataSource</tt> Code Example</a></dt>
+
+      <dt>31-10. <a href=
+      "jdbc-datasource.html#JDBC-DS-JNDI"><code class=
+      "CLASSNAME">DataSource</code> <acronym class=
+      "ACRONYM">JNDI</acronym> Code Example</a></dt>
+
+      <dt>36-1. <a href="xplang.html#XPLANG-INSTALL-EXAMPLE">Manual
+      Installation of <span class=
+      "APPLICATION">PL/pgSQL</span></a></dt>
+
+      <dt>37-1. <a href=
+      "plpgsql-trigger.html#PLPGSQL-TRIGGER-EXAMPLE">A <span class=
+      "APPLICATION">PL/pgSQL</span> Trigger Procedure</a></dt>
+
+      <dt>37-2. <a href=
+      "plpgsql-porting.html#PGSQL-PORTING-EX1">Porting a Simple
+      Function from <span class="APPLICATION">PL/SQL</span> to
+      <span class="APPLICATION">PL/pgSQL</span></a></dt>
+
+      <dt>37-3. <a href=
+      "plpgsql-porting.html#PLPGSQL-PORTING-EX2">Porting a Function
+      that Creates Another Function from <span class=
+      "APPLICATION">PL/SQL</span> to <span class=
+      "APPLICATION">PL/pgSQL</span></a></dt>
+
+      <dt>37-4. <a href=
+      "plpgsql-porting.html#PLPGSQL-PORTING-EX3">Porting a
+      Procedure With String Manipulation and <tt class=
+      "LITERAL">OUT</tt> Parameters from <span class=
+      "APPLICATION">PL/SQL</span> to <span class=
+      "APPLICATION">PL/pgSQL</span></a></dt>
+
+      <dt>37-5. <a href=
+      "plpgsql-porting.html#PLPGSQL-PORTING-EX4">Porting a
+      Procedure from <span class="APPLICATION">PL/SQL</span> to
+      <span class="APPLICATION">PL/pgSQL</span></a></dt>
+    </dl>
+  </div>
+</div>
+
+<div class="NAVFOOTER">
+  <hr class="c2" width="100%" />
+
+  <table summary="Footer navigation table" width="100%" border="0"
+  cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="33%" align="left" valign="top">&nbsp;</td>
+
+      <td width="34%" align="center" valign="top">&nbsp;</td>
+
+      <td width="33%" align="right" valign="top"><a href=
+      "preface.html" accesskey="N">Next</a></td>
+    </tr>
+
+    <tr>
+      <td width="33%" align="left" valign="top">&nbsp;</td>
+
+      <td width="34%" align="center" valign="top">&nbsp;</td>
+
+      <td width="33%" align="right" valign="top">Preface</td>
+    </tr>
+  </table>
+</div>
+
+          </div>
+          
+        </div> <!-- pgContentWrap -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+      <!-- Copyright -->
+      <div class="container">
+        <a href="/about/policies/">Policies</a> |
+        <a href="/about/policies/coc/">Code of Conduct</a> |
+        <a href="/about/">About PostgreSQL</a> |
+        <a href="/about/contact/">Contact</a><br/>
+        <p>Copyright &copy; 1996-2026 The PostgreSQL Global Development Group</p>
+      </div>
+    </footer>
+    <script src="/media/js/main.js?7257af21"></script>
+
+  </body>
+</html>

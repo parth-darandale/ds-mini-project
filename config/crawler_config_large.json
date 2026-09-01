@@ -1,0 +1,53 @@
+{
+  "seed_urls": [
+    "https://docs.python.org/3/tutorial/index.html",
+    "https://grpc.io/docs/what-is-grpc/introduction/",
+    "https://kubernetes.io/docs/concepts/overview/",
+    "https://developer.mozilla.org/en-US/docs/Learn",
+    "https://docs.docker.com/get-started/",
+    "https://www.postgresql.org/docs/current/",
+    "https://hadoop.apache.org/docs/current/",
+    "https://nginx.org/en/docs/",
+    "https://www.geeksforgeeks.org/computer-science-projects/",
+    "https://www.mongodb.com/docs/manual/"
+  ],
+  "allowed_domains": [
+    "docs.python.org",
+    "grpc.io",
+    "kubernetes.io",
+    "developer.mozilla.org",
+    "docs.docker.com",
+    "www.postgresql.org",
+    "hadoop.apache.org",
+    "nginx.org",
+    "www.geeksforgeeks.org",
+    "www.mongodb.com"
+  ],
+  "max_pages": 1000,
+  "max_pages_per_domain": 100,
+  "max_depth": 3,
+  "request_delay_seconds": 1.0,
+  "timeout_seconds": 10,
+  "user_agent": "PCCOE-Distributed-Search-Engine-Student-Crawler/1.0",
+  "excluded_url_contains": [
+    "://v1-",
+    "/bn/",
+    "/zh-cn/",
+    "/zh-tw/",
+    "/fr/",
+    "/de/",
+    "/hi/",
+    "/id/",
+    "/it/",
+    "/ja/",
+    "/ko/",
+    "/pl/",
+    "/pt-br/",
+    "/ru/",
+    "/es/",
+    "/uk/",
+    "/vi/",
+    "/fa/"
+  ],
+  "output_dir": "data"
+}

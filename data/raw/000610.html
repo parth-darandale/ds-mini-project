@@ -1,0 +1,90 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><title>Module ngx_http_auth_require_module</title><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="../../../css/style_en.css"></head><body><div id="banner"><div id="banner-content">
+
+Join us for the first quarterly
+<a href="https://go.f5.net/nginxcommunitycall">NGINX Community Call</a>
+on July 22nd to connect and discuss NGINX development.
+
+</div></div><div id="main"><div id="menu"><input class="side-menu" type="checkbox" id="side-menu"><label class="hamb" for="side-menu"><span class="hamb-line"></span></label><nav class="nav"><h1><a href="/"><img src="/img/nginx_logo.svg" alt="NGINX" class="lightimage" style="display: block; height: auto;"><div class="darkimageWrapper" style="mso-hide: all; display: none"><img src="/img/nginx_logo_dark.svg" alt="NGINX" class="darkimage" style="display: none;"></div></a></h1><div><ul class="mobilemenu"><li>english<br></li><li><a class="notrans">русский</a></li><li><br></li><li><a href="../../../news.html">news</a></li><li><a href="../../../en/">about</a></li><li><a href="../../../en/download.html">download</a></li><li><a href="../../../en/security_advisories.html">security</a></li><li><a href="../../../en/docs/">documentation</a></li><li><a href="../../../en/docs/faq.html">faq</a></li><li><a href="../../../en/books.html">books</a></li><li><a href="../../../en/community.html">community</a></li><li><a href="../../../en/enterprise.html">enterprise</a></li><li><br></li><li><a href="https://community.nginx.org">community forum (new)</a></li><li><a href="https://x.com/nginxorg">x.com</a></li><li><a href="https://blog.nginx.org/">blog</a></li><li><br></li><li><a href="../../../en/docs/njs/">njs</a></li><li><a href="https://github.com/nginx/kubernetes-ingress">ingress controller</a></li><li><a href="https://github.com/nginx/nginx-gateway-fabric">gateway fabric</a></li></ul></div></nav></div><div id="content"><h2>Module ngx_http_auth_require_module</h2><table width="100%"><tr><td align="left"><a href="#example">Example Configuration</a><br><a href="#directives">Directives</a><br>     <a href="#auth_require">auth_require</a><br></td></tr></table>
+
+<a name="summary"></a><p>
+The <code>ngx_http_auth_require_module</code> module (1.29.0)
+implements variable-based client authorization.
+It can also use variables
+provided by other access modules such as
+<a href="ngx_http_auth_request_module.html">ngx_http_auth_request_module</a>
+or
+<a href="ngx_http_auth_request_module.html">ngx_http_auth_oidc_module</a>.
+</p><p>
+</p> <blockquote class="note">
+This module is available as part of our
+<a href="https://www.f5.com/products/nginx">commercial subscription</a>.
+</blockquote><p> 
+</p>
+
+
+<a name="example"></a><center><h4>Example Configuration</h4></center><p>
+</p> <blockquote class="example"><pre>
+http {
+    oidc_provider my_idp {
+        ...
+    }
+
+    map $oidc_claim_role $admin_role {
+        "admin" 1;
+    }
+
+    server {
+        auth_oidc my_idp;
+
+        location /admin {
+            auth_require $admin_role;
+        }
+    }
+}
+</pre></blockquote><p> 
+</p>
+
+
+<a name="directives"></a><center><h4>Directives</h4></center><a name="auth_require"></a><div class="directive"><table cellspacing="0">
+                <tr>
+                <th>
+            Syntax:
+                </th>
+                <td>
+            <code><strong>auth_require</strong> 
+    <code><i>$value</i></code> ...
+    [<code>error</code>=<code>4xx</code> |
+                              <code>5xx</code>]
+;</code><br>
+                </td>
+                </tr>
+            
+                <tr>
+                <th>
+            Default:
+                </th>
+                <td>
+            <pre>auth_require off;</pre>
+                </td>
+                </tr>
+            
+                <tr>
+                <th>
+            Context:
+                </th>
+                <td>
+            <code>http</code>, <code>server</code>, <code>location</code>, <code>limit_except</code><br>
+                </td>
+                </tr>
+            </table></div><p>
+Enables authorization based on the specified variables.
+The access is allowed only if all the variables are not
+empty and are not equal to “0”.
+Otherwise, the module returns <code>403</code> code, which can be
+overridden by the <code>error</code> parameter.
+Several <code>auth_require</code> directives can be used to return
+different error codes.
+</p>
+
+</div></div></body></html>
