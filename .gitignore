@@ -9,8 +9,10 @@ env/
 .env
 *.log
 *.inspect.ndjson
+~$*.pptx
 
 # Presentation render previews
 ppt_build/node_modules/
 ppt_build/output/
 Distributed_Search_Engine_FA1_Presentation/
+Distributed_Search_Engine_FA1_Technical_Presentation/

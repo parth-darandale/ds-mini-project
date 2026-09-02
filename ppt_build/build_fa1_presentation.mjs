@@ -2,7 +2,7 @@ import fs from "node:fs/promises";
 import { Presentation, PresentationFile } from "@oai/artifact-tool";
 
 const OUT = "D:/Engg/diss/distributed-search-engine/ppt_build/output";
-const FINAL = "D:/Engg/diss/distributed-search-engine/Distributed_Search_Engine_FA1_Presentation.pptx";
+const FINAL = "D:/Engg/diss/distributed-search-engine/Distributed_Search_Engine_FA1_Technical_Presentation.pptx";
 const W = 1280;
 const H = 720;
 
@@ -103,7 +103,7 @@ function notes(slide, value) {
 }
 
 function twoColumnBullets(slide, leftTitle, leftBullets, rightTitle, rightBullets, n) {
-  title(slide, "Team implementation is divided into two connected layers", "The final system is one distributed search engine, not two isolated programs.", n);
+  title(slide, "Implementation is divided into two connected layers", "The final system combines offline indexing with online distributed query processing.", n);
   text(slide, leftTitle, { left: 118, top: 216, width: 440, height: 34 }, { fontSize: 25, bold: true, color: c.teal });
   leftBullets.forEach((b, i) => bullet(slide, b, 128, 286 + i * 58, 420, c.teal));
   text(slide, rightTitle, { left: 704, top: 216, width: 440, height: 34 }, { fontSize: 25, bold: true, color: c.blue });
@@ -119,10 +119,10 @@ function cover(p) {
   text(slide, "FA-1 Technical Presentation | Distributed Systems", { left: 92, top: 352, width: 650, height: 30 }, { fontSize: 20, bold: true, color: c.teal });
   surface(slide, { left: 850, top: 186, width: 286, height: 210 }, c.white);
   text(slide, "Scope", { left: 894, top: 224, width: 200, height: 30 }, { fontSize: 25, bold: true, color: c.navy, alignment: "center" });
-  bullet(slide, "Member 1: indexing layer", 900, 286, 210, c.teal, 18);
-  bullet(slide, "Member 2: query layer", 900, 338, 210, c.blue, 18);
+  bullet(slide, "offline indexing layer", 900, 286, 210, c.teal, 18);
+  bullet(slide, "online query layer", 900, 338, 210, c.blue, 18);
   footer(slide, 1);
-  notes(slide, "Open by stating that the presentation now covers both members' parts of the same distributed search engine.");
+  notes(slide, "Open by stating that the presentation covers the complete distributed search engine, from offline data preparation to online query processing.");
 }
 
 function problem(p) {
@@ -144,7 +144,7 @@ function problem(p) {
 function architecture(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "Architecture has an offline layer and an online layer", "Member 1 prepares shard/index files; Member 2 serves distributed queries using those files.", 3);
+  title(slide, "Architecture has an offline layer and an online layer", "The offline layer prepares shard/index files; the online layer serves distributed queries using those files.", 3);
   const steps = [
     ["Crawl", c.teal],
     ["Parse", c.blue],
@@ -159,8 +159,8 @@ function architecture(p) {
     node(slide, s[0], { left, top: 300, width: 122, height: 58 }, s[1], 16);
     if (i < steps.length - 1) arrow(slide, { left: left + 130, top: 318, width: 34, height: 22 });
   });
-  text(slide, "Member 1", { left: 170, top: 228, width: 280, height: 32 }, { fontSize: 25, bold: true, color: c.teal, alignment: "center" });
-  text(slide, "Member 2", { left: 828, top: 228, width: 280, height: 32 }, { fontSize: 25, bold: true, color: c.blue, alignment: "center" });
+  text(slide, "Offline layer", { left: 160, top: 228, width: 300, height: 32 }, { fontSize: 25, bold: true, color: c.teal, alignment: "center" });
+  text(slide, "Online layer", { left: 818, top: 228, width: 300, height: 32 }, { fontSize: 25, bold: true, color: c.blue, alignment: "center" });
   surface(slide, { left: 96, top: 440, width: 500, height: 78 }, "#E8F5F4", "#B8DEDC");
   text(slide, "Offline output: raw pages, documents.jsonl, shard files, index files, global statistics", { left: 128, top: 462, width: 436, height: 34 }, { fontSize: 19, color: c.ink, alignment: "center" });
   surface(slide, { left: 690, top: 440, width: 500, height: 78 }, "#EEF3FA", "#BDD0EA");
@@ -173,26 +173,26 @@ function split(p) {
   slide.background.fill = c.white;
   twoColumnBullets(
     slide,
-    "Member 1: data/indexing",
-    ["controlled crawling", "HTML parsing", "document partitioning", "local inverted indexes"],
-    "Member 2: query/runtime",
-    ["gRPC search-node services", "coordinator fan-out", "ranking aggregation", "web/API result display"],
+    "Offline data/indexing layer",
+    ["controlled crawling from allowed domains", "HTML parsing into document records", "document partitioning into shards", "local inverted indexes with global stats"],
+    "Online query/runtime layer",
+    ["gRPC search-node services", "coordinator fan-out and timeout", "score-based result aggregation", "web/API result display with node status"],
     4,
   );
   surface(slide, { left: 312, top: 548, width: 660, height: 54 }, "#FFF8EA", "#F4D49A");
   text(slide, "Common contract: node_id, shard path, index path, QueryRequest, SearchResult", { left: 346, top: 564, width: 592, height: 24 }, { fontSize: 19, bold: true, color: c.ink, alignment: "center" });
-  notes(slide, "Explain the division of labor while making clear both members understand the complete system.");
+  notes(slide, "Explain this as a system decomposition rather than a person-wise split. The important point is the contract between offline artifacts and runtime services.");
 }
 
-function member1Pipeline(p) {
+function offlinePipeline(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "Member 1 builds the data and index foundation", "The completed FA-1 implementation prepares the files loaded by search nodes.", 5);
+  title(slide, "Offline pipeline builds the data and index foundation", "The FA-1 implementation prepares the files loaded by search nodes.", 5);
   const rows = [
-    ["Crawler", "Visits allowed domains, respects limits, saves raw HTML offline"],
+    ["Crawler", "Visits allowed domains, respects robots/limits, saves raw HTML offline"],
     ["Parser", "Extracts title, URL, source domain, visible text, and token count"],
-    ["Partitioner", "Splits documents into node-owned shard files"],
-    ["Index builder", "Creates local postings and global IDF statistics"],
+    ["Partitioner", "Splits documents into node-owned shard files using range partitioning"],
+    ["Index builder", "Creates token postings, document metadata, and global IDF statistics"],
   ];
   rows.forEach((r, i) => {
     const top = 210 + i * 86;
@@ -200,10 +200,10 @@ function member1Pipeline(p) {
     text(slide, r[1], { left: 372, top: top + 2, width: 690, height: 32 }, { fontSize: 20, color: c.ink });
     slide.shapes.add({ geometry: "line", position: { left: 128, top: top + 52, width: 900, height: 0 }, line: { style: "solid", fill: c.line, width: 1 }, fill: "none" });
   });
-  notes(slide, "Describe Member 1 as the offline indexing layer. Mention that generated artifacts are stored and can be inspected.");
+  notes(slide, "Describe this as the offline indexing layer. Mention that generated artifacts are stored and can be inspected before the runtime starts.");
 }
 
-function member1Index(p) {
+function partitionedIndex(p) {
   const slide = p.slides.add();
   slide.background.fill = c.white;
   title(slide, "Partitioned indexing makes each node independent", "Each search node can load only its shard and its local index.", 6);
@@ -216,18 +216,18 @@ function member1Index(p) {
   surface(slide, { left: 710, top: 232, width: 400, height: 270 }, "#F8FAFC", c.line);
   text(slide, "Local inverted index", { left: 778, top: 272, width: 270, height: 30 }, { fontSize: 24, bold: true, color: c.teal, alignment: "center" });
   text(slide, "term -> [(doc_id, tf, positions)]\n\nquery terms are matched locally\n\nscores use global_stats.json", { left: 756, top: 328, width: 310, height: 136 }, { fontSize: 19, color: c.ink, alignment: "center" });
-  notes(slide, "Explain why independent shards are important for Member 2's search-node processes.");
+  notes(slide, "Explain why independent shards are important for search-node processes. Each node can load one partition instead of the full corpus.");
 }
 
-function member2Components(p) {
+function queryRuntime(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "Member 2 implements the distributed query runtime", "This part turns prepared indexes into a searchable distributed service.", 7);
+  title(slide, "Distributed query runtime serves the prepared indexes", "This layer turns local shard indexes into one searchable service.", 7);
   const rows = [
-    ["Search node service", "Loads one shard and local index; returns local top-K results"],
-    ["Coordinator service", "Receives query, calls all nodes, handles timeout, merges results"],
-    ["API / Web UI", "Accepts user input and displays ranked results with node status"],
-    ["Config layer", "Stores node IDs, host addresses, ports, and shard assignments"],
+    ["Search node service", "Loads one shard and local index; tokenizes query; returns local top-K results"],
+    ["Coordinator service", "Receives query; calls all nodes in parallel; handles timeout; merges results"],
+    ["API / Web UI", "Accepts user input; displays ranked results, source URLs, scores, and node status"],
+    ["Config layer", "Stores node IDs, host addresses, ports, shard assignments, and timeouts"],
   ];
   rows.forEach((r, i) => {
     const top = 202 + i * 90;
@@ -235,7 +235,7 @@ function member2Components(p) {
     text(slide, r[0], { left: 150, top: top + 16, width: 270, height: 28 }, { fontSize: 22, bold: true, color: [c.blue, c.navy, c.green, c.violet][i] });
     text(slide, r[1], { left: 464, top: top + 18, width: 650, height: 26 }, { fontSize: 19, color: c.ink });
   });
-  notes(slide, "This slide adds Member 2's concrete technical responsibilities: services, coordinator, interface, and configuration.");
+  notes(slide, "This slide explains the online runtime components: search-node services, coordinator, interface, and configuration.");
 }
 
 function grpcContract(p) {
@@ -255,13 +255,13 @@ function grpcContract(p) {
 function coordinator(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "Coordinator controls fan-out, timeout, and merge", "The coordinator is the central runtime component in Member 2's implementation.", 9);
+  title(slide, "Coordinator controls fan-out, timeout, and merge", "The coordinator is the central runtime component in the online layer.", 9);
   const steps = [
-    ["1", "receive user query"],
-    ["2", "send same request to all nodes"],
-    ["3", "wait with timeout"],
+    ["1", "receive query and top-K limit"],
+    ["2", "send QueryRequest to all nodes"],
+    ["3", "wait with per-node timeout"],
     ["4", "merge local top-K results"],
-    ["5", "return ranked response"],
+    ["5", "return ranked response with node status"],
   ];
   steps.forEach((s, i) => {
     const top = 194 + i * 78;
@@ -270,7 +270,7 @@ function coordinator(p) {
   });
   surface(slide, { left: 772, top: 246, width: 330, height: 244 }, c.white, c.line);
   text(slide, "Merge rule", { left: 832, top: 284, width: 210, height: 28 }, { fontSize: 24, bold: true, color: c.navy, alignment: "center" });
-  text(slide, "Combine node results\nsort by score\nremove duplicate URLs\nshow node status", { left: 814, top: 342, width: 250, height: 100 }, { fontSize: 20, color: c.ink, alignment: "center" });
+  text(slide, "combine node results\nsort by score\nremove duplicate URLs\napply top-K cut-off\nshow node status", { left: 814, top: 332, width: 250, height: 132 }, { fontSize: 19, color: c.ink, alignment: "center" });
   notes(slide, "Explain the coordinator algorithm in viva terms. This is the part where parallel query processing is managed.");
 }
 
@@ -305,7 +305,7 @@ function uiAndFaults(p) {
   bullet(slide, "skip failed node response", 712, 342, 390, c.red);
   bullet(slide, "return partial results", 712, 400, 390, c.red);
   bullet(slide, "show which node failed", 712, 458, 390, c.red);
-  notes(slide, "This slide adds the user-facing and fault-tolerant pieces of Member 2. It links to Unit 2 fault-tolerance self-study.");
+  notes(slide, "This slide explains the user-facing and fault-tolerant pieces of the online layer. It links to Unit 2 fault-tolerance self-study.");
 }
 
 function syllabus(p) {
@@ -328,9 +328,9 @@ function syllabus(p) {
 function demo(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "Evaluation demo sequence", "The demo should prove that both members' parts connect into one system.", 13);
+  title(slide, "Evaluation demo sequence", "The demo should prove that the offline and online layers connect into one system.", 13);
   const rows = [
-    ["1", "Run Member 1 pipeline", "generate documents, shards, indexes"],
+    ["1", "Run offline pipeline", "generate documents, shards, indexes"],
     ["2", "Start search-node services", "each node loads one shard and index"],
     ["3", "Start coordinator", "register node addresses and send fan-out query"],
     ["4", "Search from UI/API", "display merged ranked results"],
@@ -342,7 +342,7 @@ function demo(p) {
     text(slide, r[1], { left: 212, top: top + 2, width: 330, height: 28 }, { fontSize: 22, bold: true, color: c.navy });
     text(slide, r[2], { left: 570, top: top + 6, width: 520, height: 28 }, { fontSize: 19, color: c.muted });
   });
-  notes(slide, "Close with the exact demonstration plan. It covers Member 1 artifacts and Member 2 runtime behavior.");
+  notes(slide, "Close with the exact demonstration plan. It covers offline artifacts and online runtime behavior.");
 }
 
 async function main() {
@@ -352,9 +352,9 @@ async function main() {
   problem(p);
   architecture(p);
   split(p);
-  member1Pipeline(p);
-  member1Index(p);
-  member2Components(p);
+  offlinePipeline(p);
+  partitionedIndex(p);
+  queryRuntime(p);
   grpcContract(p);
   coordinator(p);
   searchNode(p);
