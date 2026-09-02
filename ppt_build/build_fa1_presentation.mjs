@@ -88,8 +88,17 @@ function node(slide, label, pos, fill, fontSize = 17) {
   return s;
 }
 
-function arrow(slide, pos, fill = c.muted) {
-  slide.shapes.add({ geometry: "rightArrow", position: pos, fill, line: { style: "solid", fill: "none", width: 0 } });
+function arrow(slide, pos, fill = c.navy) {
+  slide.shapes.add({
+    geometry: "rightArrow",
+    position: {
+      ...pos,
+      width: Math.max(pos.width, 34),
+      height: Math.max(pos.height, 26),
+    },
+    fill,
+    line: { style: "solid", fill: "none", width: 0 },
+  });
 }
 
 function bullet(slide, value, left, top, width, color = c.teal, size = 19) {
@@ -130,14 +139,20 @@ function problem(p) {
   slide.background.fill = c.white;
   title(slide, "Why search is a distributed-systems problem", "A centralized search system limits scalability and availability.", 2);
   text(slide, "Centralized search", { left: 122, top: 210, width: 300, height: 32 }, { fontSize: 25, bold: true, color: c.navy });
-  node(slide, "single index\nsingle query processor", { left: 142, top: 304, width: 230, height: 96 }, c.navy, 19);
-  node(slide, "bottleneck / single failure point", { left: 118, top: 474, width: 280, height: 52 }, c.red, 17);
+  node(slide, "all documents", { left: 118, top: 292, width: 150, height: 54 }, c.muted, 17);
+  arrow(slide, { left: 292, top: 305, width: 56, height: 28 }, c.red);
+  node(slide, "single index\nsingle query processor", { left: 378, top: 276, width: 210, height: 86 }, c.navy, 18);
+  node(slide, "bottleneck / single failure point", { left: 180, top: 456, width: 300, height: 56 }, c.red, 17);
+  text(slide, "one machine handles indexing and queries", { left: 156, top: 536, width: 360, height: 34 }, { fontSize: 18, color: c.muted, alignment: "center" });
   text(slide, "Distributed search", { left: 742, top: 210, width: 300, height: 32 }, { fontSize: 25, bold: true, color: c.navy });
-  node(slide, "Coordinator", { left: 884, top: 286, width: 170, height: 56 }, c.navy);
-  node(slide, "Node 1", { left: 700, top: 438, width: 132, height: 52 }, c.teal);
-  node(slide, "Node 2", { left: 902, top: 438, width: 132, height: 52 }, c.blue);
-  node(slide, "Node 3", { left: 1104, top: 438, width: 132, height: 52 }, c.violet);
-  text(slide, "Data is partitioned and query work is sent to multiple nodes in parallel.", { left: 700, top: 546, width: 500, height: 50 }, { fontSize: 20, color: c.ink, alignment: "center" });
+  node(slide, "Coordinator", { left: 710, top: 338, width: 170, height: 58 }, c.navy);
+  text(slide, "fan-out query", { left: 912, top: 312, width: 120, height: 26 }, { fontSize: 16, bold: true, color: c.navy, alignment: "center" });
+  arrow(slide, { left: 914, top: 352, width: 66, height: 30 }, c.navy);
+  node(slide, "Node 1", { left: 1024, top: 276, width: 138, height: 50 }, c.teal);
+  node(slide, "Node 2", { left: 1024, top: 354, width: 138, height: 50 }, c.blue);
+  node(slide, "Node 3", { left: 1024, top: 432, width: 138, height: 50 }, c.violet);
+  text(slide, "parallel local search", { left: 998, top: 508, width: 190, height: 26 }, { fontSize: 18, bold: true, color: c.teal, alignment: "center" });
+  text(slide, "Data is partitioned and query work is sent to multiple nodes in parallel.", { left: 720, top: 552, width: 500, height: 50 }, { fontSize: 20, color: c.ink, alignment: "center" });
   notes(slide, "Explain the project motivation using distributed-systems terms: scalability, parallel processing, and fault tolerance.");
 }
 
@@ -157,7 +172,7 @@ function architecture(p) {
   steps.forEach((s, i) => {
     const left = 74 + i * 166;
     node(slide, s[0], { left, top: 300, width: 122, height: 58 }, s[1], 16);
-    if (i < steps.length - 1) arrow(slide, { left: left + 130, top: 318, width: 34, height: 22 });
+    if (i < steps.length - 1) arrow(slide, { left: left + 124, top: 316, width: 40, height: 26 }, i < 3 ? c.teal : c.blue);
   });
   text(slide, "Offline layer", { left: 160, top: 228, width: 300, height: 32 }, { fontSize: 25, bold: true, color: c.teal, alignment: "center" });
   text(slide, "Online layer", { left: 818, top: 228, width: 300, height: 32 }, { fontSize: 25, bold: true, color: c.blue, alignment: "center" });
@@ -208,7 +223,7 @@ function partitionedIndex(p) {
   slide.background.fill = c.white;
   title(slide, "Partitioned indexing makes each node independent", "Each search node can load only its shard and its local index.", 6);
   node(slide, "documents", { left: 150, top: 286, width: 150, height: 54 }, c.navy);
-  arrow(slide, { left: 324, top: 302, width: 44, height: 22 });
+  arrow(slide, { left: 322, top: 297, width: 64, height: 34 }, c.navy);
   node(slide, "shard 1", { left: 402, top: 234, width: 130, height: 48 }, c.teal);
   node(slide, "shard 2", { left: 402, top: 310, width: 130, height: 48 }, c.blue);
   node(slide, "shard 3", { left: 402, top: 386, width: 130, height: 48 }, c.violet);
