@@ -126,10 +126,8 @@ function cover(p) {
   text(slide, "Fault-Tolerant Distributed Search Engine", { left: 88, top: 128, width: 850, height: 128 }, { fontSize: 52, bold: true, color: c.navy });
   text(slide, "Partitioned indexing and parallel query processing", { left: 92, top: 282, width: 780, height: 40 }, { fontSize: 24, color: c.muted });
   text(slide, "FA-1 Technical Presentation | Distributed Systems", { left: 92, top: 352, width: 650, height: 30 }, { fontSize: 20, bold: true, color: c.teal });
-  surface(slide, { left: 850, top: 186, width: 286, height: 210 }, c.white);
-  text(slide, "Scope", { left: 894, top: 224, width: 200, height: 30 }, { fontSize: 25, bold: true, color: c.navy, alignment: "center" });
-  bullet(slide, "offline indexing layer", 900, 286, 210, c.teal, 18);
-  bullet(slide, "online query layer", 900, 338, 210, c.blue, 18);
+  text(slide, "Presented by", { left: 884, top: 226, width: 240, height: 30 }, { fontSize: 22, bold: true, color: c.navy, alignment: "center" });
+  text(slide, "123B1B024  Atharv Rao\n123B1B040  Parth Darandale", { left: 812, top: 280, width: 386, height: 82 }, { fontSize: 20, color: c.ink, alignment: "center" });
   footer(slide, 1);
   notes(slide, "Open by stating that the presentation covers the complete distributed search engine, from offline data preparation to online query processing.");
 }
