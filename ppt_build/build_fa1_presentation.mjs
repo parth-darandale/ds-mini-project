@@ -219,10 +219,80 @@ function partitionedIndex(p) {
   notes(slide, "Explain why independent shards are important for search-node processes. Each node can load one partition instead of the full corpus.");
 }
 
+function codeEvidence(p) {
+  const slide = p.slides.add();
+  slide.background.fill = c.pale;
+  title(slide, "Core implementation follows a staged pipeline", "The code keeps crawling, parsing, sharding, and indexing as separate steps.", 7);
+  surface(slide, { left: 92, top: 206, width: 512, height: 384 }, "#F8FAFC", c.line);
+  text(slide, "Pipeline entry point", { left: 126, top: 236, width: 300, height: 30 }, { fontSize: 24, bold: true, color: c.navy });
+  text(slide,
+    "def run_pipeline(args):\n" +
+    "    crawl(config)\n" +
+    "    parse_html(raw_dir, documents.jsonl)\n" +
+    "    partition_documents(documents, shards, n)\n" +
+    "    build_indexes(shards, indexes)",
+    { left: 126, top: 302, width: 420, height: 158 },
+    { fontSize: 20, color: c.ink },
+  );
+  text(slide, "Why this matters", { left: 126, top: 500, width: 240, height: 28 }, { fontSize: 22, bold: true, color: c.teal });
+  text(slide, "Each stage has a clear input and output, so failures are easier to locate and individual stages can be rerun.", { left: 126, top: 534, width: 420, height: 46 }, { fontSize: 18, color: c.ink });
+
+  surface(slide, { left: 690, top: 206, width: 438, height: 384 }, c.white, c.line);
+  text(slide, "Index structure", { left: 728, top: 236, width: 260, height: 30 }, { fontSize: 24, bold: true, color: c.navy });
+  text(slide,
+    "index = {\n" +
+    "  \"node_id\": \"node_1\",\n" +
+    "  \"documents\": {...},\n" +
+    "  \"terms\": {\n" +
+    "    \"query\": [\n" +
+    "      {\"doc_id\": \"...\", \"tf\": 2}\n" +
+    "    ]\n" +
+    "  }\n" +
+    "}",
+    { left: 728, top: 298, width: 330, height: 206 },
+    { fontSize: 18, color: c.ink },
+  );
+  text(slide, "This is the local state loaded by every search-node process.", { left: 728, top: 536, width: 340, height: 28 }, { fontSize: 18, color: c.muted, alignment: "center" });
+  notes(slide, "Show a small code-level view without overwhelming the presentation. The snippet is simplified from app.py and the generated index structure.");
+}
+
+function outputEvidence(p) {
+  const slide = p.slides.add();
+  slide.background.fill = c.white;
+  title(slide, "Current output proves the offline layer is working", "These commands can be shown directly during evaluation.", 8);
+  surface(slide, { left: 90, top: 204, width: 520, height: 372 }, "#102A43", "#102A43");
+  text(slide, "python app.py stats", { left: 124, top: 236, width: 300, height: 28 }, { fontSize: 22, bold: true, color: c.white });
+  text(slide,
+    "Raw HTML pages: 1000\n" +
+    "Metadata records: 1000\n" +
+    "Parsed documents: 1000\n" +
+    "Global indexed documents: 1000\n" +
+    "node_1: 334 documents, 35803 terms\n" +
+    "node_2: 334 documents, 13726 terms\n" +
+    "node_3: 332 documents, 21854 terms",
+    { left: 124, top: 292, width: 428, height: 210 },
+    { fontSize: 18, color: c.white },
+  );
+  surface(slide, { left: 680, top: 204, width: 520, height: 372 }, "#F8FAFC", c.line);
+  text(slide, "python app.py search \"parallel query processing\"", { left: 714, top: 236, width: 430, height: 28 }, { fontSize: 21, bold: true, color: c.navy });
+  text(slide,
+    "1. The Kubernetes API | Kubernetes\n" +
+    "   Score: 0.9916 | Node: node_1\n\n" +
+    "2. PostgreSQL 18.6, 17.11, 16.15...\n" +
+    "   Score: 0.9632 | Node: node_2\n\n" +
+    "3. Labels and Selectors | Kubernetes\n" +
+    "   Score: 0.9484 | Node: node_1",
+    { left: 714, top: 294, width: 410, height: 188 },
+    { fontSize: 18, color: c.ink },
+  );
+  text(slide, "The result list shows which partition produced each match.", { left: 714, top: 518, width: 400, height: 36 }, { fontSize: 17, color: c.muted, alignment: "center" });
+  notes(slide, "Use this as concrete project evidence. The stats and search output were captured from the current local implementation.");
+}
+
 function queryRuntime(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "Distributed query runtime serves the prepared indexes", "This layer turns local shard indexes into one searchable service.", 7);
+  title(slide, "Distributed query runtime serves the prepared indexes", "This layer turns local shard indexes into one searchable service.", 9);
   const rows = [
     ["Search node service", "Loads one shard and local index; tokenizes query; returns local top-K results"],
     ["Coordinator service", "Receives query; calls all nodes in parallel; handles timeout; merges results"],
@@ -241,7 +311,7 @@ function queryRuntime(p) {
 function grpcContract(p) {
   const slide = p.slides.add();
   slide.background.fill = c.white;
-  title(slide, "gRPC defines the communication contract", "The coordinator and search nodes communicate through request and response messages.", 8);
+  title(slide, "gRPC defines the communication contract", "The coordinator and search nodes communicate through request and response messages.", 10);
   surface(slide, { left: 112, top: 210, width: 456, height: 350 }, "#F8FAFC", c.line);
   text(slide, "QueryRequest", { left: 152, top: 246, width: 260, height: 30 }, { fontSize: 24, bold: true, color: c.blue });
   text(slide, "query_text\n\ntop_k\n\nrequest_id\n\ntimeout_ms", { left: 170, top: 306, width: 260, height: 160 }, { fontSize: 21, color: c.ink });
@@ -255,7 +325,7 @@ function grpcContract(p) {
 function coordinator(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "Coordinator controls fan-out, timeout, and merge", "The coordinator is the central runtime component in the online layer.", 9);
+  title(slide, "Coordinator controls fan-out, timeout, and merge", "The coordinator is the central runtime component in the online layer.", 11);
   const steps = [
     ["1", "receive query and top-K limit"],
     ["2", "send QueryRequest to all nodes"],
@@ -277,7 +347,7 @@ function coordinator(p) {
 function searchNode(p) {
   const slide = p.slides.add();
   slide.background.fill = c.white;
-  title(slide, "Each search node performs local retrieval", "Nodes do not need the full corpus; they search only their own partition.", 10);
+  title(slide, "Each search node performs local retrieval", "Nodes do not need the full corpus; they search only their own partition.", 12);
   text(slide, "Node startup", { left: 128, top: 206, width: 260, height: 30 }, { fontSize: 24, bold: true, color: c.blue });
   bullet(slide, "load assigned shard file", 134, 276, 390, c.blue);
   bullet(slide, "load local inverted index", 134, 334, 390, c.blue);
@@ -294,7 +364,7 @@ function searchNode(p) {
 function uiAndFaults(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "UI and fault handling make the system demonstrable", "The faculty demo should show normal results and unavailable-node behavior.", 11);
+  title(slide, "UI and fault handling make the system demonstrable", "The faculty demo should show normal results and unavailable-node behavior.", 13);
   text(slide, "Web/API display", { left: 126, top: 214, width: 320, height: 30 }, { fontSize: 24, bold: true, color: c.green });
   bullet(slide, "query input box", 134, 284, 360, c.green);
   bullet(slide, "ranked result list", 134, 342, 360, c.green);
@@ -311,7 +381,7 @@ function uiAndFaults(p) {
 function syllabus(p) {
   const slide = p.slides.add();
   slide.background.fill = c.white;
-  title(slide, "FA-1 concepts are visible in both parts", "The project maps to Unit 1 and Unit 2 through concrete implementation choices.", 12);
+  title(slide, "FA-1 concepts are visible across the system", "The project maps to Unit 1 and Unit 2 through concrete implementation choices.", 14);
   text(slide, "Unit 1", { left: 132, top: 216, width: 190, height: 30 }, { fontSize: 25, bold: true, color: c.teal });
   bullet(slide, "architecture: coordinator + search nodes", 140, 286, 470, c.teal);
   bullet(slide, "design issue: partitioning + ranking", 140, 344, 470, c.teal);
@@ -328,7 +398,7 @@ function syllabus(p) {
 function demo(p) {
   const slide = p.slides.add();
   slide.background.fill = c.pale;
-  title(slide, "Evaluation demo sequence", "The demo should prove that the offline and online layers connect into one system.", 13);
+  title(slide, "Evaluation demo sequence", "The demo should prove that the offline and online layers connect into one system.", 15);
   const rows = [
     ["1", "Run offline pipeline", "generate documents, shards, indexes"],
     ["2", "Start search-node services", "each node loads one shard and index"],
@@ -354,6 +424,8 @@ async function main() {
   split(p);
   offlinePipeline(p);
   partitionedIndex(p);
+  codeEvidence(p);
+  outputEvidence(p);
   queryRuntime(p);
   grpcContract(p);
   coordinator(p);
