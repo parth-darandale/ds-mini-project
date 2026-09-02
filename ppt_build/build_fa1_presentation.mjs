@@ -6,42 +6,33 @@ const FINAL = "D:/Engg/diss/distributed-search-engine/Distributed_Search_Engine_
 
 const W = 1280;
 const H = 720;
-const page = { left: 72, top: 58, width: 1136, height: 602 };
+const page = { left: 76, top: 54, width: 1128, height: 604 };
 
 const colors = {
   navy: "#102A43",
   ink: "#17212B",
-  muted: "#5D6B78",
-  pale: "#F4F7FA",
-  line: "#D8E0E8",
+  muted: "#596A7A",
+  pale: "#F5F8FB",
+  line: "#D7E1EA",
   teal: "#0E7C7B",
-  cyan: "#36A3C7",
-  green: "#2E7D32",
-  amber: "#F2A93B",
   blue: "#3267B1",
   violet: "#6C5CE7",
+  amber: "#F2A93B",
+  red: "#C2413A",
+  green: "#2E7D32",
   white: "#FFFFFF",
 };
-
-const websites = [
-  "Python Docs",
-  "gRPC",
-  "Kubernetes",
-  "MDN",
-  "Docker",
-  "PostgreSQL",
-  "Hadoop",
-  "NGINX",
-  "GeeksforGeeks",
-  "MongoDB",
-];
 
 const sourceBlock =
   "[Sources]\n" +
   "D:/Engg/diss/distributed_search_engine_project_context.md\n" +
   "D:/Engg/diss/distributed-search-engine/README.md\n" +
-  "Verified local command: python app.py stats\n" +
-  "Generated corpus files: data/metadata.jsonl, data/documents.jsonl, data/shards, indexes/global_stats.json";
+  "D:/Engg/diss/distributed-search-engine/app.py\n" +
+  "D:/Engg/diss/distributed-search-engine/crawler/crawler.py\n" +
+  "D:/Engg/diss/distributed-search-engine/parser/html_parser.py\n" +
+  "D:/Engg/diss/distributed-search-engine/indexing/partitioner.py\n" +
+  "D:/Engg/diss/distributed-search-engine/indexing/index_builder.py\n" +
+  "Verified local command: python app.py stats";
 
 async function writeBlob(path, blob) {
   await fs.writeFile(path, new Uint8Array(await blob.arrayBuffer()));
@@ -65,18 +56,16 @@ function addText(slide, text, position, style = {}) {
 }
 
 function addFooter(slide, number) {
-  addText(slide, "FA-1 Distributed Systems Mini Project", { left: 72, top: 686, width: 360, height: 22 }, { fontSize: 13, color: colors.muted });
-  addText(slide, String(number).padStart(2, "0"), { left: 1160, top: 684, width: 48, height: 24 }, { fontSize: 14, bold: true, color: colors.muted, alignment: "right" });
+  addText(slide, "Distributed Search Engine | FA-1", { left: 76, top: 684, width: 360, height: 22 }, { fontSize: 13, color: colors.muted });
+  addText(slide, String(number).padStart(2, "0"), { left: 1156, top: 684, width: 48, height: 22 }, { fontSize: 14, bold: true, color: colors.muted, alignment: "right" });
 }
 
 function addTitle(slide, title, subtitle, number) {
-  addText(slide, title, { left: page.left, top: 48, width: 980, height: 54 }, { fontSize: 37, bold: true, color: colors.navy });
-  if (subtitle) {
-    addText(slide, subtitle, { left: page.left, top: 102, width: 980, height: 36 }, { fontSize: 18, color: colors.muted });
-  }
+  addText(slide, title, { left: page.left, top: 46, width: 1040, height: 56 }, { fontSize: 38, bold: true, color: colors.navy });
+  if (subtitle) addText(slide, subtitle, { left: page.left, top: 104, width: 980, height: 34 }, { fontSize: 18, color: colors.muted });
   slide.shapes.add({
     geometry: "rect",
-    position: { left: 72, top: 142, width: 112, height: 5 },
+    position: { left: page.left, top: 145, width: 112, height: 5 },
     fill: colors.teal,
     line: { style: "solid", fill: "none", width: 0 },
   });
@@ -89,45 +78,64 @@ function addSurface(slide, position, fill = colors.white, line = colors.line) {
     position,
     fill,
     line: { style: "solid", fill: line, width: 1 },
-    borderRadius: 16,
-    shadow: "shadow-sm",
+    borderRadius: 10,
   });
 }
 
-function addMetric(slide, value, label, position, accent = colors.teal) {
-  addSurface(slide, position, colors.white, colors.line);
-  slide.shapes.add({
-    geometry: "rect",
-    position: { left: position.left, top: position.top, width: 8, height: position.height },
-    fill: accent,
-    line: { style: "solid", fill: "none", width: 0 },
-  });
-  addText(slide, value, { left: position.left + 26, top: position.top + 22, width: position.width - 44, height: 54 }, { fontSize: 40, bold: true, color: colors.navy });
-  addText(slide, label, { left: position.left + 28, top: position.top + 82, width: position.width - 50, height: 48 }, { fontSize: 17, color: colors.muted });
-}
-
-function addProcessNode(slide, label, position, fill, textColor = colors.white) {
+function addNode(slide, text, position, fill, textColor = colors.white, fontSize = 18) {
   const shape = slide.shapes.add({
     geometry: "roundRect",
     position,
     fill,
     line: { style: "solid", fill: "none", width: 0 },
-    borderRadius: 14,
-    shadow: "shadow-sm",
+    borderRadius: 10,
   });
-  shape.text = label;
-  shape.text.style = { fontSize: 18, bold: true, color: textColor, alignment: "center" };
+  shape.text = text;
+  shape.text.style = { fontSize, bold: true, color: textColor, alignment: "center" };
   return shape;
 }
 
-function addArrow(slide, position, fill = colors.teal) {
-  const arrow = slide.shapes.add({
+function addArrow(slide, position, fill = colors.muted) {
+  slide.shapes.add({
     geometry: "rightArrow",
     position,
     fill,
     line: { style: "solid", fill: "none", width: 0 },
   });
-  return arrow;
+}
+
+function addLine(slide, x1, y1, x2, y2, fill = colors.muted, width = 3) {
+  slide.shapes.add({
+    geometry: "line",
+    position: {
+      left: Math.min(x1, x2),
+      top: Math.min(y1, y2),
+      width: Math.abs(x2 - x1),
+      height: Math.abs(y2 - y1),
+    },
+    line: { style: "solid", fill, width },
+    fill: "none",
+  });
+}
+
+function connect(slide, from, to, options = {}) {
+  slide.shapes.connect(from, to, {
+    kind: options.kind ?? "straight",
+    fromSide: options.fromSide,
+    toSide: options.toSide,
+    line: { style: "solid", fill: options.fill ?? colors.muted, width: options.width ?? 3 },
+    head: options.head ?? { type: "none" },
+  });
+}
+
+function addBullet(slide, text, left, top, width, color = colors.teal) {
+  slide.shapes.add({
+    geometry: "ellipse",
+    position: { left, top: top + 8, width: 9, height: 9 },
+    fill: color,
+    line: { style: "solid", fill: "none", width: 0 },
+  });
+  addText(slide, text, { left: left + 22, top, width, height: 42 }, { fontSize: 19, color: colors.ink });
 }
 
 function addNotes(slide, text) {
@@ -138,252 +146,229 @@ function addNotes(slide, text) {
 function cover(presentation) {
   const slide = presentation.slides.add();
   slide.background.fill = colors.pale;
-  slide.shapes.add({ geometry: "rect", position: { left: 0, top: 0, width: 1280, height: 720 }, fill: colors.pale, line: { style: "solid", fill: "none", width: 0 } });
-  slide.shapes.add({ geometry: "rect", position: { left: 0, top: 0, width: 26, height: 720 }, fill: colors.teal, line: { style: "solid", fill: "none", width: 0 } });
-  addText(slide, "Fault-Tolerant Distributed Search Engine", { left: 86, top: 112, width: 705, height: 150 }, { fontSize: 52, bold: true, color: colors.navy });
-  addText(slide, "Partitioned Indexing and Parallel Query Processing", { left: 90, top: 280, width: 680, height: 42 }, { fontSize: 24, color: colors.muted });
-  addText(slide, "FA-1 Mini Project | Distributed Systems", { left: 90, top: 352, width: 520, height: 32 }, { fontSize: 18, bold: true, color: colors.teal });
-  addMetric(slide, "1,000", "offline documents prepared for search", { left: 828, top: 126, width: 300, height: 144 }, colors.teal);
-  addMetric(slide, "10", "technology websites crawled", { left: 828, top: 304, width: 300, height: 144 }, colors.blue);
-  addMetric(slide, "3", "distributed search-node shards", { left: 828, top: 482, width: 300, height: 144 }, colors.amber);
+  slide.shapes.add({ geometry: "rect", position: { left: 0, top: 0, width: 22, height: H }, fill: colors.teal, line: { style: "solid", fill: "none", width: 0 } });
+  addText(slide, "Fault-Tolerant Distributed Search Engine", { left: 86, top: 118, width: 840, height: 132 }, { fontSize: 52, bold: true, color: colors.navy });
+  addText(slide, "Partitioned indexing and parallel query processing", { left: 90, top: 274, width: 760, height: 40 }, { fontSize: 24, color: colors.muted });
+  addText(slide, "FA-1 Technical Presentation | Distributed Systems", { left: 90, top: 352, width: 640, height: 32 }, { fontSize: 20, bold: true, color: colors.teal });
+  addSurface(slide, { left: 854, top: 164, width: 286, height: 298 }, colors.white, colors.line);
+  addText(slide, "Presentation focus", { left: 894, top: 204, width: 210, height: 34 }, { fontSize: 24, bold: true, color: colors.navy, alignment: "center" });
+  addBullet(slide, "system architecture", 900, 278, 190, colors.teal);
+  addBullet(slide, "Member 1 implementation", 900, 330, 200, colors.blue);
+  addBullet(slide, "FA-1 concepts", 900, 382, 190, colors.violet);
   addFooter(slide, 1);
-  addNotes(slide, "Opening slide. Establish that the project is a miniature distributed search engine and that Member 1 has completed the offline corpus and indexing pipeline.");
+  addNotes(slide, "Open as a technical student presentation. Keep the focus on design, implementation decisions, and FA-1 distributed systems concepts.");
 }
 
 function problem(presentation) {
   const slide = presentation.slides.add();
   slide.background.fill = colors.white;
-  addTitle(slide, "Centralized search becomes a bottleneck", "The project turns search into a real distributed-systems problem.", 2);
-  addText(slide, "Traditional centralized search", { left: 94, top: 210, width: 360, height: 32 }, { fontSize: 24, bold: true, color: colors.navy });
-  const center = addProcessNode(slide, "Single machine\nindex + query", { left: 150, top: 298, width: 230, height: 110 }, colors.navy);
-  const boxes = [
-    ["Storage limit", 92, 482, colors.amber],
-    ["Query overload", 320, 482, colors.amber],
-    ["Single failure point", 548, 482, colors.amber],
-  ];
-  for (const [label, left, top, color] of boxes) addProcessNode(slide, label, { left, top, width: 184, height: 58 }, color);
-  addText(slide, "Distributed search response", { left: 742, top: 210, width: 360, height: 32 }, { fontSize: 24, bold: true, color: colors.navy });
-  const n1 = addProcessNode(slide, "Node 1", { left: 740, top: 294, width: 130, height: 64 }, colors.teal);
-  const n2 = addProcessNode(slide, "Node 2", { left: 908, top: 294, width: 130, height: 64 }, colors.blue);
-  const n3 = addProcessNode(slide, "Node 3", { left: 1076, top: 294, width: 130, height: 64 }, colors.violet);
-  addProcessNode(slide, "Coordinator", { left: 888, top: 432, width: 170, height: 68 }, colors.navy);
-  addText(slide, "Partition data, search in parallel, aggregate ranked results.", { left: 740, top: 546, width: 466, height: 54 }, { fontSize: 22, color: colors.ink });
-  addNotes(slide, "Explain the motivation: one central index cannot scale well for storage, query load, and fault tolerance. The proposed architecture partitions the index across independent nodes.");
+  addTitle(slide, "Why search is a distributed-systems problem", "Large document collections create storage, processing, and availability challenges.", 2);
+  addText(slide, "Centralized approach", { left: 110, top: 208, width: 310, height: 32 }, { fontSize: 25, bold: true, color: colors.navy });
+  addNode(slide, "Single server\nindex + queries", { left: 162, top: 292, width: 200, height: 98 }, colors.navy, colors.white, 20);
+  addLine(slide, 262, 390, 262, 470, colors.muted, 3);
+  addNode(slide, "bottleneck", { left: 164, top: 470, width: 196, height: 50 }, colors.red, colors.white, 18);
+  addText(slide, "Limited CPU and storage; one failure can stop search.", { left: 112, top: 552, width: 340, height: 58 }, { fontSize: 20, color: colors.ink, alignment: "center" });
+
+  addText(slide, "Distributed approach", { left: 724, top: 208, width: 310, height: 32 }, { fontSize: 25, bold: true, color: colors.navy });
+  const coord = addNode(slide, "Coordinator", { left: 850, top: 282, width: 174, height: 58 }, colors.navy);
+  const n1 = addNode(slide, "Node 1", { left: 690, top: 424, width: 132, height: 56 }, colors.teal);
+  const n2 = addNode(slide, "Node 2", { left: 878, top: 424, width: 132, height: 56 }, colors.blue);
+  const n3 = addNode(slide, "Node 3", { left: 1066, top: 424, width: 132, height: 56 }, colors.violet);
+  connect(slide, coord, n1, { fromSide: "bottom", toSide: "top" });
+  connect(slide, coord, n2, { fromSide: "bottom", toSide: "top" });
+  connect(slide, coord, n3, { fromSide: "bottom", toSide: "top" });
+  addText(slide, "Documents are partitioned; query work happens in parallel.", { left: 700, top: 552, width: 470, height: 58 }, { fontSize: 20, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Explain the shift from one machine doing all storage and query work to independent nodes coordinated through communication.");
 }
 
 function architecture(presentation) {
   const slide = presentation.slides.add();
   slide.background.fill = colors.pale;
-  addTitle(slide, "FA-1 architecture has offline and online halves", "Our completed part prepares everything the distributed query layer needs.", 3);
-  const nodes = [
-    ["Crawler", 82, 238, colors.teal],
-    ["Parser", 252, 238, colors.blue],
-    ["Partitioner", 422, 238, colors.violet],
-    ["Indexes", 592, 238, colors.amber],
-    ["Search Nodes", 804, 238, colors.teal],
-    ["Coordinator", 974, 238, colors.navy],
-  ];
-  for (let i = 0; i < nodes.length; i++) {
-    const [label, left, top, color] = nodes[i];
-    addProcessNode(slide, label, { left, top, width: 132, height: 70 }, color);
-    if (i < nodes.length - 1) addArrow(slide, { left: left + 140, top: top + 22, width: 40, height: 26 }, colors.muted);
+  addTitle(slide, "Architecture separates indexing from query serving", "FA-1 establishes the offline foundation; FA-2 can extend the online distributed runtime.", 3);
+  addText(slide, "Offline indexing path", { left: 92, top: 204, width: 360, height: 32 }, { fontSize: 25, bold: true, color: colors.teal });
+  const offline = [["Crawler", 92, colors.teal], ["Parser", 260, colors.blue], ["Partitioner", 428, colors.violet], ["Index builder", 596, colors.amber]];
+  for (let i = 0; i < offline.length; i++) {
+    addNode(slide, offline[i][0], { left: offline[i][1], top: 292, width: 132, height: 64 }, offline[i][2], colors.white, 17);
+    if (i < offline.length - 1) addArrow(slide, { left: offline[i][1] + 140, top: 314, width: 36, height: 22 });
   }
-  addText(slide, "Member 1: offline corpus and indexes", { left: 86, top: 370, width: 650, height: 30 }, { fontSize: 24, bold: true, color: colors.navy });
-  addText(slide, "Member 2: online query layer", { left: 806, top: 370, width: 410, height: 34 }, { fontSize: 23, bold: true, color: colors.navy });
-  addSurface(slide, { left: 82, top: 420, width: 650, height: 104 }, "#E8F5F4", "#B8DEDC");
-  addText(slide, "Raw HTML -> logical documents -> three shards -> local inverted indexes -> global IDF statistics", { left: 112, top: 454, width: 590, height: 48 }, { fontSize: 22, color: colors.ink });
-  addSurface(slide, { left: 806, top: 420, width: 410, height: 104 }, "#EEF3FA", "#BDD0EA");
-  addText(slide, "gRPC search nodes, coordinator, local top-K results, global aggregation, failure display", { left: 836, top: 448, width: 350, height: 64 }, { fontSize: 20, color: colors.ink });
-  addNotes(slide, "Position Member 1 as the completed data foundation and Member 2 as the online distributed search path.");
+  addSurface(slide, { left: 104, top: 420, width: 598, height: 90 }, "#E8F5F4", "#B8DEDC");
+  addText(slide, "Output: document shards + local inverted indexes + global statistics", { left: 134, top: 448, width: 540, height: 34 }, { fontSize: 21, color: colors.ink, alignment: "center" });
+
+  addText(slide, "Online query path", { left: 810, top: 204, width: 330, height: 32 }, { fontSize: 25, bold: true, color: colors.blue });
+  const client = addNode(slide, "Client", { left: 820, top: 286, width: 126, height: 52 }, colors.green);
+  const coordinator = addNode(slide, "Coordinator", { left: 988, top: 286, width: 150, height: 52 }, colors.navy);
+  addArrow(slide, { left: 952, top: 302, width: 32, height: 22 });
+  const searchNodes = addNode(slide, "Search\nnodes", { left: 906, top: 414, width: 146, height: 68 }, colors.blue);
+  connect(slide, coordinator, searchNodes, { fromSide: "bottom", toSide: "top" });
+  addSurface(slide, { left: 780, top: 534, width: 384, height: 58 }, colors.white, colors.line);
+  addText(slide, "gRPC calls and result aggregation are Member 2's runtime layer.", { left: 806, top: 552, width: 330, height: 26 }, { fontSize: 18, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Show the boundary between Member 1 and Member 2 without making the deck look like separate files. The architecture is one linked system.");
+}
+
+function memberSplit(presentation) {
+  const slide = presentation.slides.add();
+  slide.background.fill = colors.white;
+  addTitle(slide, "Team split keeps one continuous system contract", "Both members understand the whole design, but each part has a clear responsibility.", 4);
+  addText(slide, "Member 1: data and indexing layer", { left: 116, top: 204, width: 430, height: 32 }, { fontSize: 25, bold: true, color: colors.teal });
+  addBullet(slide, "controlled crawling and offline storage", 126, 272, 430, colors.teal);
+  addBullet(slide, "HTML parsing into document records", 126, 328, 430, colors.teal);
+  addBullet(slide, "partitioned shards for future nodes", 126, 384, 430, colors.teal);
+  addBullet(slide, "local inverted indexes and global stats", 126, 440, 430, colors.teal);
+  addText(slide, "Member 2: distributed query layer", { left: 710, top: 204, width: 430, height: 32 }, { fontSize: 25, bold: true, color: colors.blue });
+  addBullet(slide, "gRPC services for search nodes", 720, 272, 430, colors.blue);
+  addBullet(slide, "coordinator fan-out and merge", 720, 328, 430, colors.blue);
+  addBullet(slide, "parallel query processing demo", 720, 384, 430, colors.blue);
+  addBullet(slide, "timeouts and partial-result handling", 720, 440, 430, colors.blue);
+  addSurface(slide, { left: 290, top: 548, width: 700, height: 54 }, "#FFF8EA", "#F4D49A");
+  addText(slide, "Shared contract: node_id, shard file, local index file, result schema", { left: 326, top: 564, width: 628, height: 26 }, { fontSize: 20, bold: true, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Use this slide to answer how two team members divided work while still building one connected distributed search engine.");
 }
 
 function pipeline(presentation) {
   const slide = presentation.slides.add();
-  slide.background.fill = colors.white;
-  addTitle(slide, "Member 1 turns web pages into searchable shards", "The crawler stores real HTML offline before any indexing is performed.", 4);
-  const y = 240;
-  const items = [
-    ["Public URLs", colors.navy],
-    ["Raw HTML", colors.teal],
-    ["Documents", colors.blue],
-    ["Shards", colors.violet],
-    ["Indexes", colors.amber],
-  ];
-  for (let i = 0; i < items.length; i++) {
-    const left = 92 + i * 222;
-    addProcessNode(slide, items[i][0], { left, top: y, width: 150, height: 78 }, items[i][1]);
-    if (i < items.length - 1) addArrow(slide, { left: left + 158, top: y + 27, width: 50, height: 28 }, colors.muted);
+  slide.background.fill = colors.pale;
+  addTitle(slide, "Member 1 pipeline creates the searchable corpus", "The output of each stage becomes the input for the next stage.", 5);
+  const steps = [["Seed URLs", "configured allowlist", colors.navy], ["Crawler", "robots, BFS, delay", colors.teal], ["Raw HTML", "offline page files", colors.green], ["Parser", "visible text extraction", colors.blue], ["Documents", "JSONL records", colors.violet], ["Indexes", "postings + IDF", colors.amber]];
+  for (let i = 0; i < steps.length; i++) {
+    const left = 82 + i * 188;
+    addNode(slide, steps[i][0], { left, top: 248, width: 128, height: 58 }, steps[i][2], colors.white, 16);
+    addText(slide, steps[i][1], { left: left - 10, top: 324, width: 148, height: 44 }, { fontSize: 17, color: colors.ink, alignment: "center" });
+    if (i < steps.length - 1) addArrow(slide, { left: left + 136, top: 266, width: 36, height: 22 });
   }
-  const desc = [
-    ["Controlled crawl", "BFS, allowlist, robots.txt, delay"],
-    ["Offline storage", "data/raw/000001.html ..."],
-    ["HTML parsing", "title, URL, visible content"],
-    ["Range split", "shard_1, shard_2, shard_3"],
-    ["TF-IDF prep", "local postings + global IDF"],
-  ];
-  for (let i = 0; i < desc.length; i++) {
-    const left = 76 + i * 222;
-    addText(slide, desc[i][0], { left, top: 360, width: 180, height: 28 }, { fontSize: 20, bold: true, color: colors.navy, alignment: "center" });
-    addText(slide, desc[i][1], { left, top: 395, width: 180, height: 58 }, { fontSize: 17, color: colors.muted, alignment: "center" });
-  }
-  addSurface(slide, { left: 170, top: 540, width: 940, height: 70 }, "#FFF8EA", "#F4D49A");
-  addText(slide, "Key principle: the crawler does not search. It produces a clean offline corpus for downstream parsing, sharding, and indexing.", { left: 202, top: 560, width: 876, height: 34 }, { fontSize: 22, color: colors.ink, alignment: "center" });
-  addNotes(slide, "Walk through the offline pipeline and stress that raw web pages are preserved separately from parsed logical documents.");
+  addSurface(slide, { left: 160, top: 470, width: 960, height: 80 }, colors.white, colors.line);
+  addText(slide, "Design decision: crawling, parsing, partitioning, and indexing are separate modules so each stage can be tested or replaced independently.", { left: 204, top: 494, width: 872, height: 34 }, { fontSize: 21, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Walk through the modules from configured seed URLs to the generated indexes. Emphasize separation of concerns.");
 }
 
-function corpus(presentation) {
+function crawlerDesign(presentation) {
+  const slide = presentation.slides.add();
+  slide.background.fill = colors.white;
+  addTitle(slide, "Crawler design is controlled, polite, and reproducible", "For FA-1, the crawler stores web pages offline before processing them.", 6);
+  addSurface(slide, { left: 112, top: 210, width: 420, height: 350 }, "#F8FAFC", colors.line);
+  addText(slide, "Control rules", { left: 150, top: 244, width: 250, height: 32 }, { fontSize: 25, bold: true, color: colors.navy });
+  addBullet(slide, "only allowed domains are visited", 154, 308, 310, colors.teal);
+  addBullet(slide, "robots.txt is checked", 154, 364, 310, colors.teal);
+  addBullet(slide, "request delay prevents aggressive crawling", 154, 420, 330, colors.teal);
+  addBullet(slide, "HTML is saved before parsing", 154, 476, 330, colors.teal);
+  addText(slide, "Crawler sequence", { left: 716, top: 210, width: 280, height: 32 }, { fontSize: 25, bold: true, color: colors.navy });
+  const y = [284, 362, 440, 518];
+  const labels = ["queue URL", "fetch page", "extract links", "save metadata"];
+  for (let i = 0; i < labels.length; i++) {
+    addNode(slide, labels[i], { left: 704, top: y[i], width: 210, height: 48 }, i % 2 === 0 ? colors.blue : colors.teal, colors.white, 17);
+    if (i < labels.length - 1) addLine(slide, 809, y[i] + 48, 809, y[i + 1], colors.muted, 3);
+  }
+  addNotes(slide, "Explain that the crawler is intentionally limited for an academic demo: it is controlled by configuration and produces repeatable offline input.");
+}
+
+function documentModel(presentation) {
   const slide = presentation.slides.add();
   slide.background.fill = colors.pale;
-  addTitle(slide, "The FA-1 corpus is balanced across 10 sources", "Each configured website contributed exactly 100 offline documents.", 5);
-  addMetric(slide, "1,000", "raw HTML pages stored offline", { left: 82, top: 198, width: 250, height: 132 }, colors.teal);
-  addMetric(slide, "1,000", "parsed logical documents", { left: 82, top: 360, width: 250, height: 132 }, colors.blue);
-  addMetric(slide, "10 x 100", "websites by documents", { left: 82, top: 522, width: 250, height: 132 }, colors.amber);
-  slide.charts.add("bar", {
-    position: { left: 386, top: 202, width: 780, height: 382 },
-    categories: websites,
-    series: [{ name: "Documents", values: websites.map(() => 100), fill: colors.teal }],
-    hasLegend: false,
-    barOptions: { direction: "column", grouping: "clustered", gapWidth: 70 },
-    yAxis: { min: 0, max: 120, majorUnit: 20, majorGridlines: { style: "solid", fill: colors.line, width: 1 } },
-    dataLabels: { showValue: true, position: "outEnd", textStyle: { fontSize: 12, fill: colors.ink } },
-    title: "Documents per source",
-    titleTextStyle: { fontSize: 18, bold: true, fill: colors.navy },
-  });
-  addNotes(slide, "Use this slide as evidence that the corpus is real, offline, and balanced across 10 technical websites.");
-}
-
-function sharding(presentation) {
-  const slide = presentation.slides.add();
-  slide.background.fill = colors.white;
-  addTitle(slide, "Range-based sharding prepares independent search nodes", "The 1,000 documents are split into three node-owned partitions.", 6);
-  const shardData = [
-    ["Node 1", "334 docs", "35,803 terms", colors.teal],
-    ["Node 2", "334 docs", "13,726 terms", colors.blue],
-    ["Node 3", "332 docs", "21,854 terms", colors.violet],
-  ];
-  for (let i = 0; i < shardData.length; i++) {
-    const left = 110 + i * 370;
-    addSurface(slide, { left, top: 214, width: 300, height: 214 }, colors.white, colors.line);
-    slide.shapes.add({ geometry: "rect", position: { left, top: 214, width: 300, height: 12 }, fill: shardData[i][3], line: { style: "solid", fill: "none", width: 0 } });
-    addText(slide, shardData[i][0], { left: left + 28, top: 248, width: 244, height: 36 }, { fontSize: 28, bold: true, color: colors.navy, alignment: "center" });
-    addText(slide, shardData[i][1], { left: left + 40, top: 306, width: 220, height: 44 }, { fontSize: 34, bold: true, color: shardData[i][3], alignment: "center" });
-    addText(slide, shardData[i][2], { left: left + 44, top: 368, width: 212, height: 30 }, { fontSize: 20, color: colors.muted, alignment: "center" });
-  }
-  slide.charts.add("doughnut", {
-    position: { left: 388, top: 468, width: 500, height: 160 },
-    categories: ["Node 1", "Node 2", "Node 3"],
-    series: [{ name: "Documents", values: [334, 334, 332], points: [{ idx: 0, fill: colors.teal }, { idx: 1, fill: colors.blue }, { idx: 2, fill: colors.violet }] }],
-    hasLegend: true,
-    legend: { position: "right", textStyle: { fontSize: 14, fill: colors.ink } },
-    dataLabels: { showValue: true, position: "center", textStyle: { fontSize: 12, fill: colors.white, bold: true } },
-    doughnutOptions: { holeSize: 58 },
-  });
-  addNotes(slide, "Explain that each future search-node process loads only its own shard and local index. This is the direct link to partitioned indexing.");
+  addTitle(slide, "Parser converts HTML pages into logical documents", "Indexing should work on clean text and stable metadata, not raw HTML.", 7);
+  addText(slide, "Raw HTML", { left: 108, top: 212, width: 220, height: 32 }, { fontSize: 25, bold: true, color: colors.navy });
+  addSurface(slide, { left: 110, top: 268, width: 326, height: 260 }, colors.white, colors.line);
+  addText(slide, "<html>\n  <title>...</title>\n  <nav>...</nav>\n  <main>\n    Visible content\n  </main>\n</html>", { left: 146, top: 306, width: 250, height: 178 }, { fontSize: 20, color: colors.ink });
+  addArrow(slide, { left: 484, top: 380, width: 70, height: 36 }, colors.muted);
+  addText(slide, "Document record", { left: 646, top: 212, width: 300, height: 32 }, { fontSize: 25, bold: true, color: colors.navy });
+  addSurface(slide, { left: 648, top: 268, width: 452, height: 260 }, colors.white, colors.line);
+  addText(slide, "{\n  doc_id,\n  url,\n  source_domain,\n  title,\n  text,\n  token_count\n}", { left: 700, top: 302, width: 300, height: 190 }, { fontSize: 22, color: colors.ink });
+  addSurface(slide, { left: 238, top: 570, width: 804, height: 50 }, "#E8F5F4", "#B8DEDC");
+  addText(slide, "This step makes search independent from website-specific HTML structure.", { left: 270, top: 584, width: 740, height: 24 }, { fontSize: 20, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Describe the parser as the boundary between messy web pages and clean searchable documents.");
 }
 
 function indexStructure(presentation) {
   const slide = presentation.slides.add();
-  slide.background.fill = colors.pale;
-  addTitle(slide, "The inverted index stores where every term appears", "Posting lists make document lookup fast inside each shard.", 7);
-  addSurface(slide, { left: 90, top: 208, width: 400, height: 352 }, colors.white, colors.line);
-  addText(slide, "Term dictionary", { left: 126, top: 238, width: 300, height: 32 }, { fontSize: 24, bold: true, color: colors.navy });
-  const terms = [["distributed", colors.teal], ["indexing", colors.blue], ["parallel", colors.violet], ["query", colors.amber]];
-  for (let i = 0; i < terms.length; i++) {
-    addProcessNode(slide, terms[i][0], { left: 126, top: 298 + i * 54, width: 190, height: 38 }, terms[i][1]);
-    addArrow(slide, { left: 326, top: 306 + i * 54, width: 56, height: 22 }, colors.muted);
-  }
-  addSurface(slide, { left: 572, top: 208, width: 610, height: 352 }, colors.white, colors.line);
-  addText(slide, "Posting list example", { left: 608, top: 238, width: 320, height: 32 }, { fontSize: 24, bold: true, color: colors.navy });
-  const postings = [
-    "D17: frequency=3, positions=[4, 18, 32]",
-    "D82: frequency=2, positions=[9, 47]",
-    "D214: frequency=5, positions=[3, 11, 42, 67, 88]",
-  ];
-  for (let i = 0; i < postings.length; i++) {
-    addText(slide, postings[i], { left: 620, top: 306 + i * 64, width: 520, height: 30 }, { fontSize: 22, color: colors.ink });
-  }
-  addText(slide, "Global IDF keeps scores comparable across nodes.", { left: 620, top: 520, width: 510, height: 72 }, { fontSize: 23, bold: true, color: colors.teal });
-  addNotes(slide, "Explain inverted index fundamentals: term to posting list. Posting list records frequency and positions, while global IDF supports fair ranking across shards.");
+  slide.background.fill = colors.white;
+  addTitle(slide, "Partitioned inverted indexes make local node search possible", "Each search node can answer using only its shard and index.", 8);
+  addText(slide, "Partitioning", { left: 102, top: 200, width: 250, height: 32 }, { fontSize: 25, bold: true, color: colors.navy });
+  addNode(slide, "documents", { left: 132, top: 278, width: 150, height: 54 }, colors.navy);
+  addArrow(slide, { left: 308, top: 294, width: 50, height: 24 });
+  addNode(slide, "shard 1", { left: 394, top: 232, width: 130, height: 48 }, colors.teal, colors.white, 16);
+  addNode(slide, "shard 2", { left: 394, top: 306, width: 130, height: 48 }, colors.blue, colors.white, 16);
+  addNode(slide, "shard 3", { left: 394, top: 380, width: 130, height: 48 }, colors.violet, colors.white, 16);
+  addText(slide, "range-based split by document order", { left: 120, top: 468, width: 410, height: 30 }, { fontSize: 19, color: colors.muted, alignment: "center" });
+  addText(slide, "Index per shard", { left: 704, top: 200, width: 250, height: 32 }, { fontSize: 25, bold: true, color: colors.navy });
+  addSurface(slide, { left: 684, top: 262, width: 394, height: 224 }, "#F8FAFC", colors.line);
+  addText(slide, "term -> posting list", { left: 738, top: 296, width: 270, height: 30 }, { fontSize: 24, bold: true, color: colors.teal, alignment: "center" });
+  addText(slide, "distributed -> [(D17, tf=3), (D82, tf=2)]\nindexing -> [(D04, tf=5), (D91, tf=1)]\nquery -> [(D11, tf=2), (D54, tf=4)]", { left: 722, top: 352, width: 320, height: 96 }, { fontSize: 18, color: colors.ink });
+  addText(slide, "global_stats.json stores corpus-level values used during ranking.", { left: 678, top: 524, width: 430, height: 44 }, { fontSize: 20, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Explain that each node holds a partition and builds a local inverted index. Global statistics keep scores comparable when results are merged.");
 }
 
-function handoff(presentation) {
+function queryFlow(presentation) {
+  const slide = presentation.slides.add();
+  slide.background.fill = colors.pale;
+  addTitle(slide, "Parallel query processing is the next layer over these indexes", "The same query is sent to all search nodes, then the coordinator merges results.", 9);
+  const userQuery = addNode(slide, "User query", { left: 98, top: 322, width: 150, height: 58 }, colors.green);
+  addArrow(slide, { left: 270, top: 338, width: 54, height: 26 });
+  const coordinator = addNode(slide, "Coordinator", { left: 354, top: 316, width: 164, height: 70 }, colors.navy);
+  const n1 = addNode(slide, "Node 1\nlocal top-K", { left: 704, top: 222, width: 170, height: 66 }, colors.teal, colors.white, 17);
+  const n2 = addNode(slide, "Node 2\nlocal top-K", { left: 704, top: 320, width: 170, height: 66 }, colors.blue, colors.white, 17);
+  const n3 = addNode(slide, "Node 3\nlocal top-K", { left: 704, top: 418, width: 170, height: 66 }, colors.violet, colors.white, 17);
+  connect(slide, coordinator, n1, { fromSide: "right", toSide: "left" });
+  connect(slide, coordinator, n2, { fromSide: "right", toSide: "left" });
+  connect(slide, coordinator, n3, { fromSide: "right", toSide: "left" });
+  addArrow(slide, { left: 908, top: 338, width: 54, height: 26 });
+  addNode(slide, "Merged\nranked list", { left: 998, top: 316, width: 170, height: 70 }, colors.amber, colors.white, 17);
+  addSurface(slide, { left: 250, top: 548, width: 780, height: 54 }, colors.white, colors.line);
+  addText(slide, "FA-1 prepares the shard/index files; Member 2 exposes them through RPC services.", { left: 282, top: 564, width: 716, height: 24 }, { fontSize: 20, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Use this slide to connect Member 1 outputs to Unit 2 communication. The query path is the runtime layer built on top of the prepared indexes.");
+}
+
+function faultTolerance(presentation) {
   const slide = presentation.slides.add();
   slide.background.fill = colors.white;
-  addTitle(slide, "Member 2 can now attach the distributed query layer", "The handoff files define a clear contract between both parts.", 8);
-  const leftItems = [
-    "data/shards/shard_1.jsonl",
-    "data/shards/shard_2.jsonl",
-    "data/shards/shard_3.jsonl",
-    "indexes/node_1/index.json",
-    "indexes/node_2/index.json",
-    "indexes/node_3/index.json",
-    "indexes/global_stats.json",
-  ];
-  addSurface(slide, { left: 86, top: 202, width: 514, height: 388 }, "#F8FAFC", colors.line);
-  addText(slide, "Files produced by Member 1", { left: 120, top: 232, width: 420, height: 30 }, { fontSize: 24, bold: true, color: colors.navy });
-  for (let i = 0; i < leftItems.length; i++) {
-    addText(slide, leftItems[i], { left: 124, top: 286 + i * 38, width: 420, height: 24 }, { fontSize: 18, color: colors.ink });
-  }
-  addSurface(slide, { left: 690, top: 202, width: 490, height: 388 }, "#E8F5F4", "#B8DEDC");
-  addText(slide, "Distributed runtime contract", { left: 728, top: 232, width: 380, height: 30 }, { fontSize: 24, bold: true, color: colors.navy });
-  const runtime = [
-    "Each node loads one shard and one local index.",
-    "Coordinator sends query to all nodes using gRPC.",
-    "Nodes return local top-K results.",
-    "Coordinator merges and ranks final results.",
-    "If one node fails, other shards still respond.",
-  ];
-  for (let i = 0; i < runtime.length; i++) {
-    addText(slide, runtime[i], { left: 730, top: 292 + i * 50, width: 392, height: 30 }, { fontSize: 20, color: colors.ink });
-  }
-  addNotes(slide, "Use this slide to show team coordination. Member 1 has a concrete output contract; Member 2 uses those files for gRPC services and the web interface.");
+  addTitle(slide, "Fault tolerance is handled through node independence", "A failed shard reduces coverage but should not stop the complete system.", 10);
+  const coordinator = addNode(slide, "Coordinator", { left: 536, top: 214, width: 170, height: 58 }, colors.navy);
+  const n1 = addNode(slide, "Node 1\navailable", { left: 250, top: 380, width: 160, height: 64 }, colors.teal, colors.white, 17);
+  const n2 = addNode(slide, "Node 2\ntimeout", { left: 560, top: 380, width: 160, height: 64 }, colors.red, colors.white, 17);
+  const n3 = addNode(slide, "Node 3\navailable", { left: 870, top: 380, width: 160, height: 64 }, colors.violet, colors.white, 17);
+  connect(slide, coordinator, n1, { fromSide: "bottom", toSide: "top" });
+  connect(slide, coordinator, n2, { fromSide: "bottom", toSide: "top" });
+  connect(slide, coordinator, n3, { fromSide: "bottom", toSide: "top" });
+  addSurface(slide, { left: 178, top: 522, width: 924, height: 66 }, "#FFF8EA", "#F4D49A");
+  addText(slide, "Coordinator returns partial results and reports the unavailable node instead of failing the whole query.", { left: 220, top: 542, width: 840, height: 26 }, { fontSize: 21, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Explain the intended fault-tolerance behavior for the project. Member 1's independent shards make this possible because each node can work separately.");
 }
 
 function syllabus(presentation) {
   const slide = presentation.slides.add();
   slide.background.fill = colors.pale;
-  addTitle(slide, "FA-1 concepts are visible in the implementation", "The project maps directly to Unit 1 and Unit 2 expectations.", 9);
-  addSurface(slide, { left: 92, top: 204, width: 500, height: 384 }, colors.white, colors.line);
-  addText(slide, "Unit 1: Distributed Systems", { left: 128, top: 236, width: 400, height: 34 }, { fontSize: 25, bold: true, color: colors.teal });
-  const u1 = [
-    "Multiple independent search-node partitions",
-    "Coordinator + search-node architecture",
-    "Scalability through document sharding",
-    "Design issue: partitioning and global ranking",
-  ];
-  for (let i = 0; i < u1.length; i++) addText(slide, u1[i], { left: 132, top: 306 + i * 58, width: 390, height: 30 }, { fontSize: 20, color: colors.ink });
-  addSurface(slide, { left: 688, top: 204, width: 500, height: 384 }, colors.white, colors.line);
-  addText(slide, "Unit 2: Communication", { left: 724, top: 236, width: 400, height: 34 }, { fontSize: 25, bold: true, color: colors.blue });
-  const u2 = [
-    "gRPC planned for coordinator-to-node RPC",
-    "Node IDs and addresses for each service",
-    "Parallel request/response message flow",
-    "Timeouts allow partial results on node failure",
-  ];
-  for (let i = 0; i < u2.length; i++) addText(slide, u2[i], { left: 728, top: 306 + i * 58, width: 390, height: 30 }, { fontSize: 20, color: colors.ink });
-  addNotes(slide, "Frame the implementation using the exact FA-1 syllabus language: architecture, design issues, middleware, RPC, identifiers, and fault tolerance.");
+  addTitle(slide, "FA-1 syllabus concepts are directly represented", "The implementation maps to Unit 1 and Unit 2 rather than only being a coding exercise.", 11);
+  addText(slide, "Unit 1: Distributed Systems", { left: 124, top: 216, width: 430, height: 32 }, { fontSize: 25, bold: true, color: colors.teal });
+  addBullet(slide, "architecture: coordinator and search nodes", 132, 286, 430, colors.teal);
+  addBullet(slide, "design issue: partitioning and ranking", 132, 346, 430, colors.teal);
+  addBullet(slide, "scalability: add nodes and shards", 132, 406, 430, colors.teal);
+  addBullet(slide, "middleware boundary between services", 132, 466, 430, colors.teal);
+  addText(slide, "Unit 2: Communication", { left: 708, top: 216, width: 430, height: 32 }, { fontSize: 25, bold: true, color: colors.blue });
+  addBullet(slide, "RPC: gRPC coordinator-to-node calls", 716, 286, 430, colors.blue);
+  addBullet(slide, "message flow: fan-out and gather", 716, 346, 430, colors.blue);
+  addBullet(slide, "identifiers: node IDs and addresses", 716, 406, 430, colors.blue);
+  addBullet(slide, "fault tolerance: timeout and partial result", 716, 466, 430, colors.blue);
+  addNotes(slide, "This slide is for faculty alignment with FA-1 guidelines. Keep answers precise and tied to visible implementation pieces.");
 }
 
 function demoPlan(presentation) {
   const slide = presentation.slides.add();
   slide.background.fill = colors.white;
-  addTitle(slide, "The faculty demo can show evidence, not just code", "A short command sequence proves the offline pipeline is complete.", 10);
-  const steps = [
-    ["1", "Show corpus stats", "python app.py stats"],
-    ["2", "Run a local index search", "python app.py search \"parallel query processing\""],
-    ["3", "Open generated files", "data/raw, documents.jsonl, data/shards, indexes"],
-    ["4", "Connect to Member 2", "Launch nodes and coordinator for gRPC demo"],
+  addTitle(slide, "Demonstration plan for evaluation", "The demo should prove the implementation step by step.", 12);
+  const rows = [
+    ["1", "Show configuration", "allowed domains, per-site limits, crawler settings"],
+    ["2", "Run pipeline command", "crawl -> parse -> shard -> index"],
+    ["3", "Inspect generated files", "raw pages, JSONL documents, shard files, indexes"],
+    ["4", "Run local search", "verify index lookup before distributed runtime"],
+    ["5", "Connect Member 2", "start nodes, send RPC query, aggregate results"],
   ];
-  for (let i = 0; i < steps.length; i++) {
-    const top = 206 + i * 96;
-    addProcessNode(slide, steps[i][0], { left: 102, top, width: 58, height: 58 }, i < 3 ? colors.teal : colors.amber);
-    addText(slide, steps[i][1], { left: 190, top: top - 2, width: 390, height: 32 }, { fontSize: 24, bold: true, color: colors.navy });
-    addText(slide, steps[i][2], { left: 190, top: top + 38, width: 780, height: 26 }, { fontSize: 18, color: colors.muted });
+  for (let i = 0; i < rows.length; i++) {
+    const top = 198 + i * 80;
+    addNode(slide, rows[i][0], { left: 120, top, width: 54, height: 54 }, i < 4 ? colors.teal : colors.amber, colors.white, 18);
+    addText(slide, rows[i][1], { left: 214, top: top - 2, width: 330, height: 30 }, { fontSize: 23, bold: true, color: colors.navy });
+    addText(slide, rows[i][2], { left: 214, top: top + 36, width: 760, height: 26 }, { fontSize: 18, color: colors.muted });
   }
-  addSurface(slide, { left: 856, top: 204, width: 270, height: 314 }, "#102A43", "#102A43");
-  addText(slide, "Evaluation message", { left: 890, top: 244, width: 204, height: 30 }, { fontSize: 22, bold: true, color: colors.white, alignment: "center" });
-  addText(slide, "The system is distributed because indexes are partitioned across independent nodes, not because distribution was added artificially.", { left: 888, top: 306, width: 210, height: 146 }, { fontSize: 21, color: colors.white, alignment: "center" });
-  addNotes(slide, "Close by connecting evidence to evaluation. The offline part is complete and ready for the distributed runtime demonstration.");
+  addSurface(slide, { left: 820, top: 504, width: 290, height: 84 }, "#E8F5F4", "#B8DEDC");
+  addText(slide, "Expected viva answer", { left: 858, top: 518, width: 214, height: 24 }, { fontSize: 19, bold: true, color: colors.navy, alignment: "center" });
+  addText(slide, "Distribution comes from partitioned indexes and parallel node processing.", { left: 850, top: 552, width: 230, height: 30 }, { fontSize: 17, color: colors.ink, alignment: "center" });
+  addNotes(slide, "Close with an evaluation-ready flow. The student should be able to run commands and explain each generated artifact.");
 }
 
 async function main() {
@@ -392,15 +377,17 @@ async function main() {
   cover(presentation);
   problem(presentation);
   architecture(presentation);
+  memberSplit(presentation);
   pipeline(presentation);
-  corpus(presentation);
-  sharding(presentation);
+  crawlerDesign(presentation);
+  documentModel(presentation);
   indexStructure(presentation);
-  handoff(presentation);
+  queryFlow(presentation);
+  faultTolerance(presentation);
   syllabus(presentation);
   demoPlan(presentation);
 
-  const inspect = await presentation.inspect({ kind: "slide,textbox,shape,chart,notes", maxChars: 16000 });
+  const inspect = await presentation.inspect({ kind: "slide,textbox,shape,chart,notes", maxChars: 18000 });
   await fs.writeFile(`${OUT}/inspect.ndjson`, inspect.ndjson);
 
   for (const [index, slide] of presentation.slides.items.entries()) {
