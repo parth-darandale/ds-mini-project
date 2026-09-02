@@ -112,7 +112,7 @@ function notes(slide, value) {
 }
 
 function twoColumnBullets(slide, leftTitle, leftBullets, rightTitle, rightBullets, n) {
-  title(slide, "Implementation is divided into two connected layers", "The final system combines offline indexing with online distributed query processing.", n);
+  title(slide, "Implementation is split across two connected repositories", "The offline repository prepares data artifacts; the runtime repository consumes them through a fixed contract.", n);
   text(slide, leftTitle, { left: 118, top: 216, width: 440, height: 34 }, { fontSize: 25, bold: true, color: c.teal });
   leftBullets.forEach((b, i) => bullet(slide, b, 128, 286 + i * 58, 420, c.teal));
   text(slide, rightTitle, { left: 704, top: 216, width: 440, height: 34 }, { fontSize: 25, bold: true, color: c.blue });
@@ -188,15 +188,15 @@ function split(p) {
   slide.background.fill = c.white;
   twoColumnBullets(
     slide,
-    "Offline data/indexing layer",
-    ["controlled crawling from allowed domains", "HTML parsing into document records", "document partitioning into shards", "local inverted indexes with global stats"],
-    "Online query/runtime layer",
+    "Offline repository",
+    ["controlled crawling from allowed domains", "HTML parsing into documents.jsonl", "partitioned shard files for nodes", "node index folders plus global_stats.json"],
+    "Runtime repository",
     ["gRPC search-node services", "coordinator fan-out and timeout", "score-based result aggregation", "web/API result display with node status"],
     4,
   );
   surface(slide, { left: 312, top: 548, width: 660, height: 54 }, "#FFF8EA", "#F4D49A");
-  text(slide, "Common contract: node_id, shard path, index path, QueryRequest, SearchResult", { left: 346, top: 564, width: 592, height: 24 }, { fontSize: 19, bold: true, color: c.ink, alignment: "center" });
-  notes(slide, "Explain this as a system decomposition rather than a person-wise split. The important point is the contract between offline artifacts and runtime services.");
+  text(slide, "Shared contract: shard files, node indexes, global stats, QueryRequest, SearchResult", { left: 346, top: 564, width: 592, height: 24 }, { fontSize: 18, bold: true, color: c.ink, alignment: "center" });
+  notes(slide, "Explain this as a codebase decomposition. The important point is that the online runtime depends on the offline artifact contract, not on rerunning a separate crawl.");
 }
 
 function offlinePipeline(p) {
@@ -416,18 +416,19 @@ function demo(p) {
   title(slide, "Evaluation demo sequence", "The demo should prove that the offline and online layers connect into one system.", 15);
   const rows = [
     ["1", "Run offline pipeline", "generate documents, shards, indexes"],
-    ["2", "Start search-node services", "each node loads one shard and index"],
-    ["3", "Start coordinator", "register node addresses and send fan-out query"],
-    ["4", "Search from UI/API", "display merged ranked results"],
-    ["5", "Stop one node", "show timeout and partial result behavior"],
+    ["2", "Share generated artifacts", "use data/shards and indexes from the offline repo"],
+    ["3", "Start search-node services", "each node loads one shard and index"],
+    ["4", "Start coordinator", "register node addresses and send fan-out query"],
+    ["5", "Search from UI/API", "display merged ranked results"],
+    ["6", "Stop one node", "show timeout and partial result behavior"],
   ];
   rows.forEach((r, i) => {
-    const top = 194 + i * 78;
-    node(slide, r[0], { left: 122, top, width: 48, height: 48 }, i < 4 ? c.teal : c.red, 18);
+    const top = 184 + i * 64;
+    node(slide, r[0], { left: 122, top, width: 46, height: 46 }, i < 5 ? c.teal : c.red, 18);
     text(slide, r[1], { left: 212, top: top + 2, width: 330, height: 28 }, { fontSize: 22, bold: true, color: c.navy });
     text(slide, r[2], { left: 570, top: top + 6, width: 520, height: 28 }, { fontSize: 19, color: c.muted });
   });
-  notes(slide, "Close with the exact demonstration plan. It covers offline artifacts and online runtime behavior.");
+  notes(slide, "Close with the exact demonstration plan. It shows two separate repositories connected by copied/generated artifacts and then demonstrates degraded-mode query behavior.");
 }
 
 async function main() {
