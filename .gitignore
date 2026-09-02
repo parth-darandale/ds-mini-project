@@ -8,4 +8,9 @@ venv/
 env/
 .env
 *.log
+*.inspect.ndjson
 
+# Presentation render previews
+ppt_build/node_modules/
+ppt_build/output/
+Distributed_Search_Engine_FA1_Presentation/
